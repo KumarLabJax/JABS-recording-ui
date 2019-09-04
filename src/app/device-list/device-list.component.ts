@@ -1,9 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Device } from '../shared/device';
 import { DeviceService } from '../services/device.service';
-import { first, switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { Subject, timer } from 'rxjs';
 
+interface DeviceCount {
+  name: string;
+  value: number;
+}
 
 @Component({
   selector: 'app-device-list',
@@ -16,10 +20,12 @@ export class DeviceListComponent implements OnInit, OnDestroy {
   private killTrigger: Subject<void> = new Subject();
 
   // list of devices to be displayed
-  devices: Device[] = [];
+  public devices: Device[] = [];
 
   // map for quick access to devices by name
-  deviceMap = new Map();
+  private deviceMap = new Map();
+
+  @Output() deviceSummary = new EventEmitter<DeviceCount[]>();
 
   constructor(private deviceService: DeviceService) { }
 
@@ -29,10 +35,28 @@ export class DeviceListComponent implements OnInit, OnDestroy {
         takeUntil(this.killTrigger),
         switchMap(() => this.deviceService.getDevices())
       ).subscribe((data) => {
+
+        let idle = 0;
+        let busy = 0;
+        let down = 0;
+
         // rather than just assigning data (updated list of devices from server) to this.devices,
         // we go through this process of updating the existing Device objects (if a device already exists
         // with that name).
         for (const d of data) {
+
+          switch (d.state) {
+            case 'BUSY':
+              busy++;
+              break;
+            case 'IDLE':
+              idle++;
+              break;
+            case 'DOWN':
+              down++;
+              break;
+          }
+
           if (!this.deviceMap.has(d.name)) {
             this.devices.push(d);
             this.deviceMap.set(d.name, this.devices[this.devices.length - 1]);
@@ -43,10 +67,20 @@ export class DeviceListComponent implements OnInit, OnDestroy {
             }
           }
         }
+
+        // the list must be emitted in this order otherwise the
+        // chart color scheme will not map properly
+        this.deviceSummary.emit(
+          [
+            {name: 'down', value: down},
+            {name: 'busy', value: busy},
+            {name: 'idle', value: idle}
+          ]
+        );
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.killTrigger.next();
   }
 }

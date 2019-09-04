@@ -1,0 +1,13 @@
+<ngx-charts-advanced-pie-chart
+  [scheme]="chartColorScheme"
+  label="Devices"
+  [results]="deviceSummary"
+  [view]="[400, 200]"
+  [animations]="false"
+  [percentageFormatting]="formatChartPercentage"
+>
+</ngx-charts-advanced-pie-chart>
+
+<app-device-list
+  (deviceSummary)="deviceSummary=$event"
+></app-device-list>

@@ -10,6 +10,8 @@ import { MatButtonModule, MatDialogModule, MatIconModule, MatTooltipModule } fro
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DeviceInfoDialogComponent, FormatSecondsPipe } from './device/device-info-dialog/device-info-dialog.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { DeviceInfoDialogComponent, FormatSecondsPipe } from './device/device-in
     DeviceComponent,
     DeviceListComponent,
     DeviceInfoDialogComponent,
-    FormatSecondsPipe
+    FormatSecondsPipe,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,8 @@ import { DeviceInfoDialogComponent, FormatSecondsPipe } from './device/device-in
     BrowserAnimationsModule,
     MatDialogModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -26,17 +26,17 @@
 
   &-idle {
     @extend .status-badge;
-    background: limegreen linear-gradient(to bottom right, lime, limegreen);
+    background: orange linear-gradient(to bottom right, yellow, orange);
   }
 
   &-busy {
     @extend .status-badge;
-    background: darkorange linear-gradient(to bottom right, orange, darkorange);
+    background: limegreen linear-gradient(to bottom right, greenyellow, limegreen);
   }
 
   &-down {
     @extend .status-badge;
-    background: red linear-gradient(to bottom right, orangered, red);
+    background: red linear-gradient(to bottom right, pink, red);
   }
 }
 

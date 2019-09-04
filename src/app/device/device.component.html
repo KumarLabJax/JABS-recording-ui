@@ -1,6 +1,8 @@
-<div class="device-container mat-elevation-z1" (click)="showDetails()">
+<div class="device-container mat-elevation-z1" (click)="openDetailsDialog()">
   <div fxLayout="row" fxLayoutAlign="space-around center">
-    <div class="device-name" fxFlex fxFlexAlign="auto">{{device.name}}</div>
-    <div [class]="'status-badge-'+device.state.toLowerCase()" [matTooltip]="device.state"></div>
+    <div class="device-name" fxFlex fxFlexAlign="auto">{{data.name}}</div>
+    <span fxFlex></span>
+    <mat-icon [color]="'warn'" [inline]="true" *ngIf="showWarningIcon()">warning</mat-icon>
+    <div [class]="'status-badge-'+data.state.toLowerCase()" [matTooltip]="data.state"></div>
   </div>
 </div>

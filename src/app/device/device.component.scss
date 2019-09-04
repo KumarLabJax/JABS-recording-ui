@@ -1,8 +1,7 @@
 .device-container {
   border: 1px solid lightgray;
   border-radius: 5px;
-  #box-shadow: 3px 3px gray;
-  padding: 10px;
+  padding: 6px;
   width: 200px;
   cursor: pointer;
 }
@@ -18,9 +17,9 @@
   width: 15px;
   border-radius: 50%;
   align-items: center;
-  justify-content: right;
+
   vertical-align: middle;
-  margin-left: 10px;
+  margin-left: 5px;
   -moz-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);
   -webkit-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);
   box-shadow: inset 1px 1px 1px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);

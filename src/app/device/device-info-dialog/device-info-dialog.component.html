@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>{{device.name}}</h1>
+<mat-dialog-content>
+  <div *ngIf="device.state != 'DOWN'; else down">
+
+    <div class="section">Camera Status:</div>
+    <div class="content">
+      <div>State: {{device.sensor_status.camera.recording ? 'recording' : 'off'}}</div>
+      <div *ngIf="device.sensor_status.camera.recording">
+        <div>Duration: {{device.sensor_status.camera.duration | formatSeconds}}</div>
+        <div>Frame rate: {{device.sensor_status.camera.fps | number:'.0-1'}}</div>
+      </div>
+    </div>
+
+    <div class="section">Removable Storage:</div>
+    <div class="content">
+      <div>Capacity: {{device.system_info.total_disk / 1024 | number:'.0-2'}} GB</div>
+      <div [class]="warnings.disk_space ? 'warning' : ''">
+        Available: {{device.system_info.free_disk / 1024 | number:'.0-2'}} GB
+      </div>
+    </div>
+
+    <div class="section">System Info:</div>
+    <div class="content">
+      <div>Uptime: {{device.system_info.uptime | formatSeconds}}</div>
+      <div>Memory (total): {{device.system_info.total_ram / 1024 | number:'.0-1' }}MB</div>
+      <div [class]="warnings.free_memory ? 'warning' : ''">Memory (free): {{device.system_info.free_ram / 1024 | number:'.0-1' }}MB</div>
+      <div>Load average: {{device.system_info.load | number:'0.0-2'}}</div>
+    </div>
+
+  </div>
+  <ng-template #down>
+    <p>{{device.name}} appears to be down.</p>
+  </ng-template>
+
+  <div class="last-update">Last Update: {{device.last_update | date:'medium'}}</div>
+
+
+
+</mat-dialog-content>
+<div mat-dialog-actions>
+  <button mat-stroked-button (click)="onNoClick()">Close</button>
+</div>

@@ -1,5 +1,6 @@
 <h1 mat-dialog-title>{{device.name}}</h1>
-<mat-dialog-content>
+<mat-dialog-content class="mat-typography">
+
   <div *ngIf="device.state != 'DOWN'; else down">
 
     <div class="section">Camera Status:</div>
@@ -33,8 +34,6 @@
   </ng-template>
 
   <div class="last-update">Last Update: {{device.last_update | date:'medium'}}</div>
-
-
 
 </mat-dialog-content>
 <div mat-dialog-actions>

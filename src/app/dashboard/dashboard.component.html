@@ -4,10 +4,6 @@
   [results]="deviceSummary"
   [view]="[400, 200]"
   [animations]="false"
-  [percentageFormatting]="formatChartPercentage"
->
-</ngx-charts-advanced-pie-chart>
+  [percentageFormatting]="formatChartPercentage"></ngx-charts-advanced-pie-chart>
 
-<app-device-list
-  (deviceSummary)="deviceSummary=$event"
-></app-device-list>
+<app-device-list (deviceSummary)="deviceSummary=$event"></app-device-list>

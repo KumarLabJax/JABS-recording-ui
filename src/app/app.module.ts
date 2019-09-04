@@ -6,12 +6,13 @@ import { AppComponent } from './app.component';
 import { DeviceComponent } from './device/device.component';
 import { DeviceListComponent } from './device-list/device-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatButtonModule, MatDialogModule, MatIconModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatIconModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DeviceInfoDialogComponent, FormatSecondsPipe } from './device/device-info-dialog/device-info-dialog.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     DeviceListComponent,
     DeviceInfoDialogComponent,
     FormatSecondsPipe,
-    DashboardComponent
+    DashboardComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     MatDialogModule,
     MatButtonModule,
     MatIconModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

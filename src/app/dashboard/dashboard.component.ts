@@ -17,9 +17,15 @@ export class DashboardComponent {
     domain: ['#FF0000', '#32CD32', '#FFA500']
   };
 
+  public filter: string;
+
   constructor() { }
 
   public formatChartPercentage(n: number) {
     return n.toFixed(1);
+  }
+
+  public updateFilter(event) {
+    this.filter = event.target.value.trim().toLowerCase();
   }
 }

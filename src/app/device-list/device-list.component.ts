@@ -36,6 +36,11 @@ export class DeviceListComponent implements OnInit, OnDestroy, OnChanges {
   // filter string input from the dashboard
   @Input() filter: string;
 
+  // input that can specify states to show
+  @Input() showIdle = true;
+  @Input() showBusy = true;
+  @Input() showDown = true;
+
   constructor(private deviceService: DeviceService) { }
 
   ngOnInit() {
@@ -80,7 +85,7 @@ export class DeviceListComponent implements OnInit, OnDestroy, OnChanges {
           }
         }
 
-        this.filterDevices();
+      this.filteredDevices = this.devices.filter(this.filterCallback, this);
 
         // the summary must be emitted in this order (down, busy, idle) otherwise the
         // chart color scheme will not map properly
@@ -95,7 +100,7 @@ export class DeviceListComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
-    this.filterDevices();
+    this.filteredDevices = this.devices.filter(this.filterCallback, this);
   }
 
   ngOnDestroy() {
@@ -103,24 +108,25 @@ export class DeviceListComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   /*
-  this function is called any time the filter input changes or we get updated
-  information about the devices from the server
-  */
-  public filterDevices() {
-    if (this.filter !== undefined && this.filter.length > 0) {
-      this.filteredDevices = this.devices.filter(this.filterCallback, this);
-    } else {
-      this.filteredDevices = this.devices;
-    }
-  }
-
-  /*
   this is a callback function to pass the array.filter() method to filter
   our list of devices
    */
   public filterCallback(element, index, array) {
-    return element.name.toLowerCase().indexOf(this.filter) !== -1 ||
-      element.state.toLowerCase().indexOf(this.filter) !== -1;
-
+    // first we will check the state of the element, and if the state is
+    // not being filtered out then we will check the text filter
+    if (
+      element.state === 'BUSY' && !this.showBusy ||
+      element.state === 'IDLE' && !this.showIdle ||
+      element.state === 'DOWN' && !this.showDown
+    ) {
+      // the state of this devices is hidden, return false
+      return false;
+    } else if (this.filter && element.name.toLowerCase().indexOf(this.filter) === -1) {
+      // the text filter has a value, throw out anything that doesn't match
+      // for now we only search the device name
+      return false;
+    }
+    // made it through the filtering, this element should be kept
+    return true;
   }
 }

@@ -7,7 +7,19 @@
   [percentageFormatting]="formatChartPercentage"></ngx-charts-advanced-pie-chart>
 
 
-<mat-form-field>
-  <input matInput placeholder="Filter Devices" (keyup)="updateFilter($event)">
-</mat-form-field>
-<app-device-list (deviceSummary)="deviceSummary=$event" [filter]="filter"></app-device-list>
+<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+  <mat-form-field>
+    <input matInput placeholder="Filter Devices" (keyup)="updateFilter($event)">
+  </mat-form-field>
+  <mat-checkbox color="primary" [checked]="true" (change)="stateFilters.idle = !stateFilters.idle">Idle</mat-checkbox>
+  <mat-checkbox color="primary" [checked]="true" (change)="stateFilters.busy = !stateFilters.busy">Busy</mat-checkbox>
+  <mat-checkbox color="primary" [checked]="true" (change)="stateFilters.down = !stateFilters.down">Down</mat-checkbox>
+</div>
+
+<app-device-list
+  (deviceSummary)="deviceSummary=$event"
+  [filter]="filter"
+  [showDown]="stateFilters.down"
+  [showBusy]="stateFilters.busy"
+  [showIdle]="stateFilters.idle">
+</app-device-list>

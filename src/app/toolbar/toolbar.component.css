@@ -1,0 +1,33 @@
+.icon {
+  padding: 0 14px;
+}
+
+img {
+  padding: 0 10px 0 0;
+  height: 39px;
+  cursor: pointer;
+  transition: all 200ms ease;
+  -webkit-transition : -webkit-filter 200ms linear
+}
+
+img:hover {
+  filter: grayscale(0.5) brightness(1.4);
+  -webkit-filter: grayscale(0.5) brightness(1.4);
+}
+
+img:focus {
+  outline: none;
+}
+
+caption {
+  font-size: 12px;
+  transition: color 0.5s ease;
+}
+
+mat-toolbar {
+  transition: background-color 0.5s ease;
+}
+
+h1, mat-icon {
+  transition: color 0.5s ease;
+}

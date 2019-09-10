@@ -1,0 +1,16 @@
+.section {
+  font-weight: bold;
+}
+
+.content {
+  margin: 5px;
+}
+
+.last-update {
+  font-size: smaller;
+  margin-top: 10px;
+}
+
+.warning {
+  color: darkred;
+}

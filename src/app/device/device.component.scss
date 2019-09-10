@@ -1,0 +1,43 @@
+.device-container {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 6px;
+  width: 200px;
+  cursor: pointer;
+}
+
+.device-name {
+  font-weight: bolder;
+  align-items: center;
+  justify-content: right;
+}
+
+.status-badge {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  align-items: center;
+
+  vertical-align: middle;
+  margin-left: 5px;
+  -moz-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);
+  -webkit-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);
+  box-shadow: inset 1px 1px 1px rgba(255, 255, 255, .4), inset -1px -1px 1px rgba(0, 0, 0, .4);
+
+  &-idle {
+    @extend .status-badge;
+    background: orange linear-gradient(to bottom right, yellow, orange);
+  }
+
+  &-busy {
+    @extend .status-badge;
+    background: limegreen linear-gradient(to bottom right, greenyellow, limegreen);
+  }
+
+  &-down {
+    @extend .status-badge;
+    background: red linear-gradient(to bottom right, pink, red);
+  }
+}
+
+

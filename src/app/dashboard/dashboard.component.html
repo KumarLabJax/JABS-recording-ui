@@ -6,4 +6,8 @@
   [animations]="false"
   [percentageFormatting]="formatChartPercentage"></ngx-charts-advanced-pie-chart>
 
-<app-device-list (deviceSummary)="deviceSummary=$event"></app-device-list>
+
+<mat-form-field>
+  <input matInput placeholder="Filter Devices" (keyup)="updateFilter($event)">
+</mat-form-field>
+<app-device-list (deviceSummary)="deviceSummary=$event" [filter]="filter"></app-device-list>

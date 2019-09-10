@@ -7,7 +7,8 @@ import { DeviceComponent } from './device/device.component';
 import { DeviceListComponent } from './device-list/device-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
-  MatButtonModule, MatCheckboxModule,
+  MatButtonModule,
+  MatCheckboxModule,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,

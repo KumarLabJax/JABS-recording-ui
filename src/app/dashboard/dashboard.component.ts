@@ -19,6 +19,12 @@ export class DashboardComponent {
 
   public filter: string;
 
+  public stateFilters = {
+    idle: true,
+    busy: true,
+    down: true
+  };
+
   constructor() { }
 
   public formatChartPercentage(n: number) {

@@ -8,6 +8,7 @@ import { DeviceListComponent } from './device-list/device-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   MatButtonModule,
+  MatCheckboxModule,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
@@ -45,7 +46,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     NgxChartsModule,
     MatToolbarModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent],

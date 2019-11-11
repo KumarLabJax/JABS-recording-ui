@@ -7,12 +7,12 @@ import { DeviceComponent } from './device/device.component';
 import { DeviceListComponent } from './device-list/device-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
-  MatButtonModule,
+  MatButtonModule, MatCardModule,
   MatCheckboxModule,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule,
+  MatInputModule, MatStepperModule,
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
@@ -22,6 +22,9 @@ import { DeviceInfoDialogComponent, FormatSecondsPipe } from './device/device-in
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { NewRecordingSessionComponent } from './new-recording-session/new-recording-session.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     DeviceInfoDialogComponent,
     FormatSecondsPipe,
     DashboardComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    NewRecordingSessionComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,11 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatCardModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Device } from '../shared/device';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { retry } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
@@ -16,5 +16,10 @@ export class DeviceService {
 
   public getDevices(): Observable<Device[]> {
     return this.http.get<Device[]>(this.baseURL).pipe(retry(3));
+  }
+
+  public getIdleDevices(): Observable<Device[]> {
+    const parameters = new HttpParams().set('state', 'IDLE');
+    return this.http.get<Device[]>(this.baseURL, {params: parameters}).pipe(retry(3));
   }
 }

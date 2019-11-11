@@ -1,0 +1,146 @@
+
+<div fxLayout="row" fxLayoutAlign="center center" >
+  <div fxFlex="80" fxFlex.lt-md="100" fxFlex.gt-lg="60">
+    <mat-card class="new-session-card mat-typography">
+      <mat-card-header>
+        <mat-card-title><h1>Create New Recording Session</h1></mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+          <mat-vertical-stepper linear="true" #stepper>
+
+            <mat-step label="Session Metadata" [stepControl]="metadataForm">
+              <form [formGroup]="metadataForm">
+                <mat-form-field class="large-text">
+                  <input matInput type="text" placeholder="Recording Session Name" formControlName="name">
+                </mat-form-field>
+                <mat-form-field class="notes" appearance="outline">
+                  <textarea matInput placeholder="Recording Session Notes" formControlName="notes" type="outline" rows="8"></textarea>
+                </mat-form-field>
+                <div class="stepper-controls">
+                  <div fxFlex></div>
+                  <button mat-button matStepperNext color="primary">CONTINUE</button>
+                </div>
+              </form>
+            </mat-step>
+
+            <mat-step label="Session Parameters" [stepControl]="newSessionForm">
+              <form [formGroup]="newSessionForm">
+                <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" >
+                  <div>
+                    <label class="mat-typography">Duration: </label>
+                    <mat-form-field class="time-field" appearance="standard">
+                      <mat-label>Hours</mat-label>
+                      <input matInput type="number" placeholder="Hours" min="0" formControlName="hours" min="0" max="336">
+                    </mat-form-field>
+                    <mat-form-field class="time-field" appearance="standard">
+                      <mat-label>Minutes</mat-label>
+                      <input matInput type="number" placeholder="Minutes" min="0" formControlName="minutes" min="0" max="59">
+                    </mat-form-field>
+                    <mat-form-field class="time-field" appearance="standard">
+                      <mat-label>Seconds</mat-label>
+                      <input matInput type="number" placeholder="Seconds" min="0" formControlName="seconds" min="0" max="59">
+                    </mat-form-field>
+                  </div>
+
+
+                  <mat-checkbox color="primary" formControlName="fragmentHourly">Fragment Output Hourly</mat-checkbox>
+                </div>
+
+                <div>
+                  <div style="padding-bottom: 10px">
+                    <mat-error *ngIf="newSessionForm.hasError('validateDuration')">
+                      Specify a valid duration to continue.
+                    </mat-error>
+                  </div>
+                </div>
+
+                <div>
+                  <mat-form-field>
+                    <mat-label>Filename Prefix</mat-label>
+                    <input matInput formControlName="filePrefix">
+                    <mat-hint>Optional filename prefix</mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <div style="padding-top: 10px" class="stepper-controls">
+                  <div fxFlex></div>
+                  <button mat-button matStepperNext color="primary" >CONTINUE</button>
+                </div>
+              </form>
+            </mat-step>
+
+            <mat-step label="Select Devices" [stepControl]="">
+
+              <div fxLayout="row">
+                <mat-form-field>
+                  <input matInput placeholder="Filter Devices" (keyup)="updateFilter($event)">
+                </mat-form-field>
+              </div>
+
+
+              <div fxLayout="row">
+                <div class="device-container">
+                  <h3 class="mat-typography">Available Devices</h3>
+
+                  <div
+                    cdkDropList
+                    #todoList="cdkDropList"
+                    [cdkDropListData]="idleDevices"
+                    [cdkDropListConnectedTo]="[doneList]"
+                    class="device-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <app-device [data]="device" *ngFor="let device of idleDevices" cdkDrag></app-device>
+                  </div>
+                </div>
+
+                <div class="device-container">
+                  <h3 class="mat-typography">Assigned Devices</h3>
+
+                  <div
+                    cdkDropList
+                    #doneList="cdkDropList"
+                    [cdkDropListData]="selectedDevices"
+                    [cdkDropListConnectedTo]="[todoList]"
+                    class="device-list"
+                    (cdkDropListDropped)="drop($event)">
+                    <app-device [data]="device" *ngFor="let device of selectedDevices" cdkDrag></app-device>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="stepper-controls">
+                <div fxFlex></div>
+                <button mat-button matStepperNext color="primary">CONTINUE</button>
+                <span></span>
+                <button mat-button
+                        [disabled]="disableSubmit"
+                        color="primary"
+                        (click)="submit()">
+                  SUBMIT
+                </button>
+              </div>
+            </mat-step>
+
+            <mat-step optional label="Advanced Settings" [stepControl]="">
+
+            </mat-step>
+
+          </mat-vertical-stepper>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <div fxFlex></div>
+        <button mat-button (click)="cancel()" color="warn">CANCEL</button>
+        <span>
+          <button mat-button
+                  [disabled]="disableSubmit"
+                  color="primary"
+                  (click)="submit()">
+            SUBMIT
+          </button>
+        </span>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

@@ -11,14 +11,13 @@
             <mat-step label="Session Metadata" [stepControl]="metadataForm">
               <form [formGroup]="metadataForm">
                 <mat-form-field class="large-text">
-                  <input matInput type="text" placeholder="Recording Session Name" formControlName="name">
+                  <input matInput type="text" placeholder="Recording Session Name" formControlName="name" required>
                 </mat-form-field>
                 <mat-form-field class="notes" appearance="outline">
                   <textarea matInput placeholder="Recording Session Notes" formControlName="notes" type="outline" rows="8"></textarea>
                 </mat-form-field>
                 <div class="stepper-controls">
-                  <div fxFlex></div>
-                  <button mat-button matStepperNext color="primary">CONTINUE</button>
+                  <button mat-button matStepperNext color="primary" [disabled]="!metadataForm.valid">CONTINUE</button>
                 </div>
               </form>
             </mat-step>
@@ -29,16 +28,20 @@
                   <div>
                     <label class="mat-typography">Duration: </label>
                     <mat-form-field class="time-field" appearance="standard">
+                      <mat-label>Days</mat-label>
+                      <input matInput type="number" placeholder="Days" min="0" formControlName="days" min="0" max="14">
+                    </mat-form-field>
+                    <mat-form-field class="time-field" appearance="standard">
                       <mat-label>Hours</mat-label>
-                      <input matInput type="number" placeholder="Hours" min="0" formControlName="hours" min="0" max="336">
+                      <input matInput type="number"(ngModelChange)="onHourChange($event)" placeholder="Hours" min="0" formControlName="hours" min="0" max="24">
                     </mat-form-field>
                     <mat-form-field class="time-field" appearance="standard">
                       <mat-label>Minutes</mat-label>
-                      <input matInput type="number" placeholder="Minutes" min="0" formControlName="minutes" min="0" max="59">
+                      <input matInput type="number" (ngModelChange)="onMinuteChange($event)" placeholder="Minutes" min="0" formControlName="minutes" min="0" max="60">
                     </mat-form-field>
                     <mat-form-field class="time-field" appearance="standard">
                       <mat-label>Seconds</mat-label>
-                      <input matInput type="number" placeholder="Seconds" min="0" formControlName="seconds" min="0" max="59">
+                      <input matInput type="number" (ngModelChange)="onSecondChange($event)" placeholder="Seconds" min="0" formControlName="seconds" min="0" max="60">
                     </mat-form-field>
                   </div>
 
@@ -63,8 +66,7 @@
                 </div>
 
                 <div style="padding-top: 10px" class="stepper-controls">
-                  <div fxFlex></div>
-                  <button mat-button matStepperNext color="primary" >CONTINUE</button>
+                  <button mat-button matStepperNext color="primary" [disabled]="!newSessionForm.valid">CONTINUE</button>
                 </div>
               </form>
             </mat-step>
@@ -79,7 +81,7 @@
 
 
               <div fxLayout="row">
-                <div class="device-container">
+                <div class="drag-list-container">
                   <h3 class="mat-typography">Available Devices</h3>
 
                   <div
@@ -90,10 +92,11 @@
                     class="device-list"
                     (cdkDropListDropped)="drop($event)">
                     <app-device [data]="device" *ngFor="let device of idleDevices" cdkDrag></app-device>
+
                   </div>
                 </div>
 
-                <div class="device-container">
+                <div class="drag-list-container">
                   <h3 class="mat-typography">Assigned Devices</h3>
 
                   <div
@@ -110,20 +113,21 @@
 
 
               <div class="stepper-controls">
-                <div fxFlex></div>
-                <button mat-button matStepperNext color="primary">CONTINUE</button>
-                <span></span>
-                <button mat-button
-                        [disabled]="disableSubmit"
-                        color="primary"
-                        (click)="submit()">
-                  SUBMIT
-                </button>
+                <button mat-button matStepperNext color="primary" [disabled]="!selectedDevices.length">CONTINUE</button>
               </div>
             </mat-step>
 
-            <mat-step optional label="Advanced Settings" [stepControl]="">
+            <mat-step optional label="Advanced Settings" [stepControl]="advancedSettingsForm">
+              <form [formGroup]="advancedSettingsForm">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                  <mat-label>Target FPS </mat-label>
+                  <mat-slider (input)="onFpsChange($event)" formControlName="targetFps" color="primary"
+                              min="1" max="120" step="1"></mat-slider>
+                  <span>{{fpsLabel}}</span>
+                </div>
 
+                <mat-checkbox color="primary" formControlName="applyFilter">ApplyFilter</mat-checkbox>
+              </form>
             </mat-step>
 
           </mat-vertical-stepper>
@@ -134,7 +138,7 @@
         <button mat-button (click)="cancel()" color="warn">CANCEL</button>
         <span>
           <button mat-button
-                  [disabled]="disableSubmit"
+                  [disabled]="!metadataForm.valid || !newSessionForm.valid || selectedDevices.length == 0"
                   color="primary"
                   (click)="submit()">
             SUBMIT

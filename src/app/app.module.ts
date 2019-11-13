@@ -12,7 +12,7 @@ import {
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatStepperModule,
+  MatInputModule, MatSliderModule, MatSnackBarModule, MatStepperModule,
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
@@ -55,7 +55,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatCardModule,
     MatStepperModule,
     ReactiveFormsModule,
-    DragDropModule
+    DragDropModule,
+    MatSliderModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

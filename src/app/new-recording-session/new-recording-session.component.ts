@@ -4,6 +4,8 @@ import { Device } from '../shared/device';
 import { DeviceService } from '../services/device.service';
 import { first } from 'rxjs/operators';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MatSliderChange, MatSnackBar } from '@angular/material';
+import { RecordingSessionService } from '../services/recording-session.service';
 
 @Component({
   selector: 'app-new-recording-session',
@@ -15,6 +17,7 @@ export class NewRecordingSessionComponent implements OnInit {
   public disableSubmit = true;
   public idleDevices: Device[];
   public selectedDevices: Device[] = [];
+  public fpsLabel = 30;
 
   metadataForm = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -22,24 +25,33 @@ export class NewRecordingSessionComponent implements OnInit {
   });
 
   newSessionForm = new FormGroup({
-    hours: new FormControl(0, [Validators.min(0)]),
-    minutes: new FormControl(0, [Validators.min(0)]),
-    seconds: new FormControl(0, [Validators.min(0)]),
+    days: new FormControl(0, [Validators.min(0), Validators.max(14)]),
+    hours: new FormControl(0, [Validators.min(0), Validators.max(23)]),
+    minutes: new FormControl(0, [Validators.min(0), Validators.max(59)]),
+    seconds: new FormControl(0, [Validators.min(0), Validators.max(59)]),
     filePrefix: new FormControl(),
     fragmentHourly: new FormControl(true)
   }, (formGroup: FormGroup) => {
     return NewRecordingSessionComponent.validateSettings(formGroup);
   });
 
-  constructor(private deviceService: DeviceService) { }
+  advancedSettingsForm = new FormGroup({
+    targetFps: new FormControl(this.fpsLabel),
+    applyFilter: new FormControl(true)
+  });
+
+  constructor(private deviceService: DeviceService,
+              private recordingSessionService: RecordingSessionService,
+              private snackbar: MatSnackBar) { }
 
   static validateSettings(group: FormGroup) {
 
+    const days = group.controls[`days`].value;
     const hours = group.controls[`hours`].value;
     const minutes = group.controls[`minutes`].value;
     const seconds = group.controls[`seconds`].value;
 
-    if ((hours + minutes + seconds) === 0) {
+    if ((days + hours + minutes + seconds) === 0) {
       return {
         validateDuration: {
           valid: false
@@ -54,7 +66,6 @@ export class NewRecordingSessionComponent implements OnInit {
     this.deviceService.getIdleDevices().pipe(first()).subscribe(
       (data) => {
         this.idleDevices = data;
-        console.log(this.idleDevices);
       }, err => {
         console.error('error getting idle devices: ', err);
       }
@@ -62,6 +73,29 @@ export class NewRecordingSessionComponent implements OnInit {
   }
 
   submit() {
+
+    const duration = (
+      this.newSessionForm.value.days * 86400 +
+      this.newSessionForm.value.hours * 3600 +
+      this.newSessionForm.value.minutes * 60 +
+      this.newSessionForm.value.seconds
+    );
+
+    this.recordingSessionService.createNewSession(
+      this.selectedDevices,
+      this.metadataForm.value.name,
+      this.metadataForm.value.notes,
+      duration,
+      this.newSessionForm.value.filePrefix,
+      this.newSessionForm.value.fragmentHourly,
+      this.advancedSettingsForm.value.targetFps,
+      this.advancedSettingsForm.value.applyFilter
+    ).subscribe(result => {
+      this.openSnackbar('Recording Session Created');
+    }, err => {
+      this.openSnackbar('Error creating recording session');
+      console.error(err);
+    });
 
   }
 
@@ -78,4 +112,40 @@ export class NewRecordingSessionComponent implements OnInit {
         event.currentIndex);
     }
   }
+
+  onFpsChange(event: MatSliderChange) {
+    this.fpsLabel = event.value;
+  }
+
+  onHourChange(value) {
+    if (value === 24) {
+      this.newSessionForm.controls[`hours`].setValue(0);
+      this.newSessionForm.controls[`days`].setValue(this.newSessionForm.value.days + 1);
+    }
+  }
+
+  onMinuteChange(value) {
+    if (value === 60) {
+      this.newSessionForm.controls[`minutes`].setValue(0);
+      this.newSessionForm.controls[`hours`].setValue(this.newSessionForm.value.hours + 1);
+    }
+  }
+
+  onSecondChange(value) {
+    if (value === 60) {
+      this.newSessionForm.controls[`seconds`].setValue(0);
+      this.newSessionForm.controls[`minutes`].setValue(this.newSessionForm.value.minutes + 1);
+    }
+  }
+
+  /**
+   * open a snackbar with a default configuration
+   * @param message string message to display in the snackbar
+   * @param duration time to show the message in milliseconds
+   */
+  private openSnackbar(message: string, duration: number = 6000) {
+    this.snackbar.open(message, 'CLOSE', {duration});
+  }
+
+
 }

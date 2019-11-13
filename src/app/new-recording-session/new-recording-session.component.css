@@ -11,12 +11,17 @@
   width: 100%;
   max-width: 500px;
 }
+
 .time-field {
   width: 80px;
   margin-left: 10px;
 }
 
-.device-container {
+.slider {
+  max-width: 150px;
+}
+
+.drag-list-container {
   width: 225px;
   max-width: 100%;
   margin: 0 25px 25px 0;

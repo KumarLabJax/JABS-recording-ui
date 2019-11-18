@@ -34,7 +34,6 @@ export class RecordingSessionService {
     let payload = {
       name,
       duration,
-      file_prefix: filePrefix,
       fragment_hourly: fragmentHourly,
       target_fps: targetFps,
       apply_filter: applyFilter,
@@ -43,6 +42,10 @@ export class RecordingSessionService {
 
     if (notes) {
       payload[`notes`] = notes;
+    }
+
+    if (filePrefix) {
+      payload[`filePrefix`] = filePrefix;
     }
 
     const headers = new HttpHeaders().set('Content-Type', 'application/json')

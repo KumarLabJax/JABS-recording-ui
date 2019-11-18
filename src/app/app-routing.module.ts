@@ -7,6 +7,7 @@ import { NewRecordingSessionComponent } from './new-recording-session/new-record
 
 const routes: Routes = [
   {path: '', component: DashboardComponent},
+  {path: 'dashboard', component: DashboardComponent},
   {path: 'device-list', component: DeviceListComponent},
   {path: 'new-session', component: NewRecordingSessionComponent}
 ];

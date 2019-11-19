@@ -85,7 +85,7 @@ export class DeviceListComponent implements OnInit, OnDestroy, OnChanges {
           }
         }
 
-      this.filteredDevices = this.devices.filter(this.filterCallback, this);
+        this.filteredDevices = this.devices.filter(this.filterCallback, this);
 
         // the summary must be emitted in this order (down, busy, idle) otherwise the
         // chart color scheme will not map properly
@@ -107,9 +107,9 @@ export class DeviceListComponent implements OnInit, OnDestroy, OnChanges {
     this.killTrigger.next();
   }
 
-  /*
-  this is a callback function to pass the array.filter() method to filter
-  our list of devices
+  /**
+   * this is a callback function to pass the array.filter() method to filter
+   * our list of devices
    */
   public filterCallback(element, index, array) {
     // first we will check the state of the element, and if the state is

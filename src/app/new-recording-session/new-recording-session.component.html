@@ -87,11 +87,11 @@
                   <div
                     cdkDropList
                     #todoList="cdkDropList"
-                    [cdkDropListData]="idleDevices"
+                    [cdkDropListData]="filteredDevices"
                     [cdkDropListConnectedTo]="[doneList]"
                     class="device-list"
                     (cdkDropListDropped)="drop($event)">
-                    <app-device [data]="device" *ngFor="let device of idleDevices" cdkDrag></app-device>
+                    <app-device [data]="device" *ngFor="let device of filteredDevices" cdkDrag></app-device>
 
                   </div>
                 </div>

@@ -17,8 +17,11 @@ import { Location } from '@angular/common';
 export class NewRecordingSessionComponent implements OnInit {
 
   public idleDevices: Device[];
+  public filteredDevices: Device[] = [];
   public selectedDevices: Device[] = [];
   public fpsLabel = 30;
+
+  private filter = '';
 
   // the new recording session form consists of a stepper with three sections
   // each section has it's own form group (continuing to the next section depends on the previous
@@ -81,6 +84,7 @@ export class NewRecordingSessionComponent implements OnInit {
     this.deviceService.getIdleDevices().pipe(first()).subscribe(
       (data) => {
         this.idleDevices = data;
+        this.filteredDevices = this.idleDevices.filter(this.filterCallback, this);
       }, err => {
         console.error('error getting idle devices: ', err);
       }
@@ -190,5 +194,27 @@ export class NewRecordingSessionComponent implements OnInit {
    */
   private openSnackbar(message: string, duration: number = 6000) {
     this.snackbar.open(message, 'CLOSE', {duration});
+  }
+
+  /**
+   * this is a callback function to pass the array.filter() method to filter
+   * our list of devices
+   */
+  public filterCallback(element, index, array) {
+    if (this.filter && element.name.toLowerCase().indexOf(this.filter) === -1) {
+      // the text filter has a value, throw out anything that doesn't match
+      // for now we only search the device name
+      return false;
+    }
+    // made it through the filtering, this element should be kept
+    return true;
+  }
+
+  public updateFilter(event) {
+    this.filter = event.target.value.trim().toLowerCase();
+
+    if (this.idleDevices.length) {
+      this.filteredDevices = this.idleDevices.filter(this.filterCallback, this);
+    }
   }
 }

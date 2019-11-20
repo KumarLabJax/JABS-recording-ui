@@ -1,3 +1,5 @@
+import { Device } from './device';
+
 export interface RecordingSession {
   name: string;
   notes?: string;
@@ -6,5 +8,5 @@ export interface RecordingSession {
   fragmentHourly: boolean;
   targetFps: number;
   applyFilter: boolean;
-  extendedAttributes?: object;
+  devices?: Device[];
 }

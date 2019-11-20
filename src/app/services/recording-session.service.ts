@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { retry } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { RecordingSession } from '../shared/recording-session';
-import { Device } from '../shared/device';
 
 @Injectable({
   providedIn: 'root'
@@ -15,37 +13,29 @@ export class RecordingSessionService {
 
   constructor(private http: HttpClient) { }
 
-  public createNewSession(
-    devices: Device[],
-    name: string,
-    notes: string,
-    duration: number,
-    filePrefix: string,
-    fragmentHourly: boolean,
-    targetFps: number,
-    applyFilter: boolean) {
+  public createNewSession(session: RecordingSession) {
 
     const ids: number[] = [];
 
-    devices.forEach(d => {
+    session.devices.forEach(d => {
       ids.push(d.id);
     });
 
     const payload = {
-      name,
-      duration,
-      fragment_hourly: fragmentHourly,
-      target_fps: targetFps,
-      apply_filter: applyFilter,
+      name: session.name,
+      duration: session.duration,
+      fragment_hourly: session.fragmentHourly,
+      target_fps: session.targetFps,
+      apply_filter: session.applyFilter,
       device_ids: ids
     };
 
-    if (notes) {
-      payload[`notes`] = notes;
+    if (session.notes) {
+      payload[`notes`] = session.notes;
     }
 
-    if (filePrefix) {
-      payload[`file_prefix`] = filePrefix;
+    if (session.filePrefix) {
+      payload[`file_prefix`] = session.filePrefix;
     }
 
     const headers = new HttpHeaders().set('Content-Type', 'application/json')

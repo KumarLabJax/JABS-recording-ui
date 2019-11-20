@@ -8,6 +8,7 @@ import { MatSliderChange, MatSnackBar } from '@angular/material';
 import { RecordingSessionService } from '../services/recording-session.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { RecordingSession } from '../shared/recording-session';
 
 @Component({
   selector: 'app-new-recording-session',
@@ -98,23 +99,7 @@ export class NewRecordingSessionComponent implements OnInit {
    */
   submit() {
 
-    const duration = (
-      this.newSessionForm.value.days * 86400 +
-      this.newSessionForm.value.hours * 3600 +
-      this.newSessionForm.value.minutes * 60 +
-      this.newSessionForm.value.seconds
-    );
-
-    this.recordingSessionService.createNewSession(
-      this.selectedDevices,
-      this.metadataForm.value.name,
-      this.metadataForm.value.notes,
-      duration,
-      this.newSessionForm.value.filePrefix,
-      this.newSessionForm.value.fragmentHourly,
-      this.advancedSettingsForm.value.targetFps,
-      this.advancedSettingsForm.value.applyFilter
-    ).subscribe(result => {
+    this.recordingSessionService.createNewSession(this.session()).subscribe(result => {
       this.openSnackbar('Recording Session Created');
       this.router.navigateByUrl('/dashboard');
     }, err => {
@@ -197,18 +182,42 @@ export class NewRecordingSessionComponent implements OnInit {
   }
 
   /**
+   * return a RecordingSession object using the current form value
+   */
+  private session(): RecordingSession {
+    const duration = (
+      this.newSessionForm.value.days * 86400 +
+      this.newSessionForm.value.hours * 3600 +
+      this.newSessionForm.value.minutes * 60 +
+      this.newSessionForm.value.seconds
+    );
+
+    return {
+      devices: this.selectedDevices,
+      name: this.metadataForm.value.name,
+      notes: this.metadataForm.value.notes,
+      duration,
+      filePrefix: this.newSessionForm.value.filePrefix,
+      fragmentHourly: this.newSessionForm.value.fragmentHourly,
+      targetFps: this.advancedSettingsForm.value.targetFps,
+      applyFilter: this.advancedSettingsForm.value.applyFilter
+    };
+  }
+
+  /**
    * this is a callback function to pass the array.filter() method to filter
    * our list of devices
    */
   public filterCallback(element) {
-    return this.filter && element.name.toLowerCase().indexOf(this.filter) >= 0;
+    console.log(this.filter);
+    return !this.filter || this.filter && element.name.toLowerCase().indexOf(this.filter) >= 0;
   }
 
   public updateFilter(event) {
     this.filter = event.target.value.trim().toLowerCase();
 
     if (this.idleDevices.length) {
-      this.filteredDevices = this.idleDevices.filter(this.filterCallback);
+      this.filteredDevices = this.idleDevices.filter(this.filterCallback, this);
     }
   }
 }

@@ -200,21 +200,15 @@ export class NewRecordingSessionComponent implements OnInit {
    * this is a callback function to pass the array.filter() method to filter
    * our list of devices
    */
-  public filterCallback(element, index, array) {
-    if (this.filter && element.name.toLowerCase().indexOf(this.filter) === -1) {
-      // the text filter has a value, throw out anything that doesn't match
-      // for now we only search the device name
-      return false;
-    }
-    // made it through the filtering, this element should be kept
-    return true;
+  public filterCallback(element) {
+    return this.filter && element.name.toLowerCase().indexOf(this.filter) >= 0;
   }
 
   public updateFilter(event) {
     this.filter = event.target.value.trim().toLowerCase();
 
     if (this.idleDevices.length) {
-      this.filteredDevices = this.idleDevices.filter(this.filterCallback, this);
+      this.filteredDevices = this.idleDevices.filter(this.filterCallback);
     }
   }
 }

@@ -31,7 +31,7 @@ export class RecordingSessionService {
       ids.push(d.id);
     });
 
-    let payload = {
+    const payload = {
       name,
       duration,
       fragment_hourly: fragmentHourly,
@@ -45,7 +45,7 @@ export class RecordingSessionService {
     }
 
     if (filePrefix) {
-      payload[`filePrefix`] = filePrefix;
+      payload[`file_prefix`] = filePrefix;
     }
 
     const headers = new HttpHeaders().set('Content-Type', 'application/json')

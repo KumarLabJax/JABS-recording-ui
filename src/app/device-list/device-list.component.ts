@@ -111,7 +111,7 @@ export class DeviceListComponent implements OnInit, OnDestroy, OnChanges {
    * this is a callback function to pass the array.filter() method to filter
    * our list of devices
    */
-  public filterCallback(element, index, array) {
+  public filterCallback(element) {
     // first we will check the state of the element, and if the state is
     // not being filtered out then we will check the text filter
     if (
@@ -119,7 +119,7 @@ export class DeviceListComponent implements OnInit, OnDestroy, OnChanges {
       element.state === 'IDLE' && !this.showIdle ||
       element.state === 'DOWN' && !this.showDown
     ) {
-      // the state of this devices is hidden, return false
+      // the state of this device is hidden, return false
       return false;
     } else if (this.filter && element.name.toLowerCase().indexOf(this.filter) === -1) {
       // the text filter has a value, throw out anything that doesn't match

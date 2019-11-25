@@ -44,9 +44,6 @@
                       <input matInput type="number" (ngModelChange)="onSecondChange($event)" placeholder="Seconds" min="0" formControlName="seconds" min="0" max="60">
                     </mat-form-field>
                   </div>
-
-
-                  <mat-checkbox color="primary" formControlName="fragmentHourly">Fragment Output Hourly</mat-checkbox>
                 </div>
 
                 <div>
@@ -57,12 +54,8 @@
                   </div>
                 </div>
 
-                <div>
-                  <mat-form-field>
-                    <mat-label>Filename Prefix</mat-label>
-                    <input matInput formControlName="filePrefix">
-                    <mat-hint>Optional filename prefix</mat-hint>
-                  </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="start" >
+                  <mat-checkbox color="primary" formControlName="fragmentHourly">Fragment Output Hourly</mat-checkbox>
                 </div>
 
                 <div style="padding-top: 10px" class="stepper-controls">
@@ -73,7 +66,7 @@
 
             <mat-step label="Select Devices" [stepControl]="">
 
-              <div fxLayout="row">
+              <div fxLayout="row" fxLayoutAlign="start center" >
                 <mat-form-field>
                   <input matInput placeholder="Filter Devices" (keyup)="updateFilter($event)">
                 </mat-form-field>
@@ -86,9 +79,10 @@
 
                   <div
                     cdkDropList
-                    #todoList="cdkDropList"
+                    #availableList="cdkDropList"
+                    [cdkDropListSortingDisabled]="true"
                     [cdkDropListData]="filteredDevices"
-                    [cdkDropListConnectedTo]="[doneList]"
+                    [cdkDropListConnectedTo]="[assignedList]"
                     class="device-list"
                     (cdkDropListDropped)="drop($event)">
                     <app-device [data]="device" *ngFor="let device of filteredDevices" cdkDrag></app-device>
@@ -101,9 +95,10 @@
 
                   <div
                     cdkDropList
-                    #doneList="cdkDropList"
+                    #assignedList="cdkDropList"
+                    [cdkDropListSortingDisabled]="true"
                     [cdkDropListData]="selectedDevices"
-                    [cdkDropListConnectedTo]="[todoList]"
+                    [cdkDropListConnectedTo]="[availableList]"
                     class="device-list"
                     (cdkDropListDropped)="drop($event)">
                     <app-device [data]="device" *ngFor="let device of selectedDevices" cdkDrag></app-device>
@@ -111,9 +106,29 @@
                 </div>
               </div>
 
+              <button mat-button color="primary" matTooltip="Assign all listed available devices to session" (click)="assignAll()">
+                Assign All <mat-icon>forward</mat-icon>
+              </button>
+
 
               <div class="stepper-controls">
                 <button mat-button matStepperNext color="primary" [disabled]="!selectedDevices.length">CONTINUE</button>
+              </div>
+            </mat-step>
+
+            <mat-step label="File Names" [stepControl]="filenameForm">
+              <button class="bulk-assign-button" mat-button color="primary" matTooltip="bulk assign by pasting a list of filenames">Bulk assign <mat-icon>assignment</mat-icon></button>
+              <form [formGroup]="filenameForm">
+                <span *ngFor="let d of selectedDevices">
+                  <mat-form-field >
+                     <mat-label>{{d.name}}: </mat-label>
+                     <input matInput type="text" [formControlName]="d.name">
+                  </mat-form-field>
+                </span>
+              </form>
+
+              <div class="stepper-controls">
+                <button mat-button matStepperNext color="primary" [disabled]="filenameForm.invalid">CONTINUE</button>
               </div>
             </mat-step>
 

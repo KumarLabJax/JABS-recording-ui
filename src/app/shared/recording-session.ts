@@ -3,7 +3,6 @@ export interface RecordingSession {
   name: string;
   notes?: string;
   duration: number;
-  file_prefix: string;
   fragment_hourly: boolean;
   target_fps: number;
   apply_filter: boolean;
@@ -12,4 +11,5 @@ export interface RecordingSession {
   device_statuses?: object;
   id?: number;
   status?: string;
+  file_prefixes?: { [id: number]: string};
 }

@@ -28,8 +28,8 @@ export class RecordingSessionService {
       payload[`notes`] = session.notes;
     }
 
-    if (session.file_prefix) {
-      payload[`file_prefix`] = session.file_prefix;
+    if (session.file_prefixes) {
+      payload[`file_prefixes`] = session.file_prefixes;
     }
 
     const headers = new HttpHeaders().set('Content-Type', 'application/json')

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  appName: 'Central Control App',
-  api: 'http://localhost:5000/api/'
+  appName: 'Long Term Monitoring System',
+  api: 'http://bhltms-dev.jax.org/api/'
 };
 
 /*

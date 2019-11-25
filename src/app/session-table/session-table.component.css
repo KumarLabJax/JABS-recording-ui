@@ -1,0 +1,34 @@
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+   background: #efefef;
+   cursor: pointer;
+}
+
+tr.example-element-row:hover {
+  cursor: pointer;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+}
+
+.device-status-attribute {
+  margin-left: 10px;
+}
+
+.device-status-name {
+  font-weight: bolder;
+  margin-left: 5px;
+}
+

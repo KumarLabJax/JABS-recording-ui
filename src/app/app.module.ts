@@ -7,12 +7,18 @@ import { DeviceComponent } from './device/device.component';
 import { DeviceListComponent } from './device-list/device-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
-  MatButtonModule, MatCardModule,
+  MatButtonModule,
+  MatCardModule,
   MatCheckboxModule,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatSliderModule, MatSnackBarModule, MatStepperModule,
+  MatInputModule,
+  MatProgressSpinnerModule,
+  MatSliderModule,
+  MatSnackBarModule,
+  MatStepperModule,
+  MatTableModule,
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
@@ -25,6 +31,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { NewRecordingSessionComponent } from './new-recording-session/new-recording-session.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DurationPipe, SessionTableComponent } from './session-table/session-table.component';
+import { CancelConfirmationDialogComponent } from './session-table/cancel-confirmation-dialog/cancel-confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +43,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FormatSecondsPipe,
     DashboardComponent,
     ToolbarComponent,
-    NewRecordingSessionComponent
+    NewRecordingSessionComponent,
+    SessionTableComponent,
+    DurationPipe,
+    CancelConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -57,10 +68,15 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ReactiveFormsModule,
     DragDropModule,
     MatSliderModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTableModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DeviceInfoDialogComponent]
+  entryComponents: [
+    DeviceInfoDialogComponent,
+    CancelConfirmationDialogComponent
+  ]
 })
 export class AppModule { }

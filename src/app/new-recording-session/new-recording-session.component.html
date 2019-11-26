@@ -14,7 +14,7 @@
                   <input matInput type="text" placeholder="Recording Session Name" formControlName="name" required>
                 </mat-form-field>
                 <mat-form-field class="notes" appearance="outline">
-                  <textarea matInput placeholder="Recording Session Notes" formControlName="notes" type="outline" rows="8"></textarea>
+                  <textarea matInput placeholder="Recording Session Notes" formControlName="notes"  rows="8"></textarea>
                 </mat-form-field>
                 <div class="stepper-controls">
                   <button mat-button matStepperNext color="primary" [disabled]="!metadataForm.valid">CONTINUE</button>
@@ -106,7 +106,7 @@
                 </div>
               </div>
 
-              <button mat-button color="primary" matTooltip="Assign all listed available devices to session" (click)="assignAll()">
+              <button mat-button color="primary" matTooltip="Assign all listed available devices to session" (click)="assignAll()" [disabled]="!filteredDevices.length">
                 Assign All <mat-icon>forward</mat-icon>
               </button>
 
@@ -117,7 +117,7 @@
             </mat-step>
 
             <mat-step label="File Names" [stepControl]="filenameForm">
-              <button class="bulk-assign-button" mat-button color="primary" matTooltip="bulk assign by pasting a list of filenames">Bulk assign <mat-icon>assignment</mat-icon></button>
+              <button class="bulk-assign-button" mat-button color="primary" matTooltip="bulk assign by pasting a list of filenames" (click)="clickBulkFilenameAssignment()">Bulk assign <mat-icon>assignment</mat-icon></button>
               <form [formGroup]="filenameForm">
                 <span *ngFor="let d of selectedDevices">
                   <mat-form-field >

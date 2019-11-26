@@ -1,0 +1,20 @@
+<section class="mat-typography">
+  <h1 mat-dialog-title>Bulk Filename Prefix Submission</h1>
+  <mat-dialog-content>
+    <p>
+      Paste a list of filename prefixes here, one filename per line.
+      These must be in the same order as the selected devices (devices are sorted alphanumerically by name).
+    </p>
+    <form [formGroup]="formGroup">
+      <mat-form-field appearance="outline">
+        <textarea matInput rows="8" formControlName="fileNames" placeholder="Enter {{data.expectedCount}} filename{{data.expectedCount > 1 ? 's' : ''}}"></textarea>
+        <mat-hint>Enter one filename per device</mat-hint>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <span fxFlex></span>
+    <button mat-button (click)="dialogRef.close(false)">CANCEL</button>
+    <button mat-button color="primary" (click)="dialogRef.close(formGroup.controls.fileNames.value)" [disabled]="submitDisabled()">SAVE</button>
+  </mat-dialog-actions>
+</section>

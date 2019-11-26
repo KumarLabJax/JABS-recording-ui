@@ -33,6 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DurationPipe, SessionTableComponent } from './session-table/session-table.component';
 import { CancelConfirmationDialogComponent } from './session-table/cancel-confirmation-dialog/cancel-confirmation-dialog.component';
+import { FileprefixGroupSetDialogComponent } from './new-recording-session/fileprefix-group-set-dialog/fileprefix-group-set-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { CancelConfirmationDialogComponent } from './session-table/cancel-confir
     NewRecordingSessionComponent,
     SessionTableComponent,
     DurationPipe,
-    CancelConfirmationDialogComponent
+    CancelConfirmationDialogComponent,
+    FileprefixGroupSetDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +78,8 @@ import { CancelConfirmationDialogComponent } from './session-table/cancel-confir
   bootstrap: [AppComponent],
   entryComponents: [
     DeviceInfoDialogComponent,
-    CancelConfirmationDialogComponent
+    CancelConfirmationDialogComponent,
+    FileprefixGroupSetDialogComponent
   ]
 })
 export class AppModule { }

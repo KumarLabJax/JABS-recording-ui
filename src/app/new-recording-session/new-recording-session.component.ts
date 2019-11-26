@@ -218,26 +218,21 @@ export class NewRecordingSessionComponent implements OnInit {
       this.newSessionForm.value.seconds
     );
 
-    const ids: number[] = [];
-
-    this.selectedDevices.forEach(d => {
-      ids.push(d.id);
-    });
-
     const newSession = {
-      device_ids: ids,
       name: this.metadataForm.value.name,
       notes: this.metadataForm.value.notes,
       duration,
       fragment_hourly: this.newSessionForm.value.fragmentHourly,
       target_fps: this.advancedSettingsForm.value.targetFps,
       apply_filter: this.advancedSettingsForm.value.applyFilter,
-      file_prefixes: {}
+      device_spec: []
     };
 
     this.selectedDevices.forEach(d => {
-      newSession.file_prefixes[d.id] = this.filenameForm.controls[d.name].value;
+      newSession.device_spec.push({device_id: d.id, filename_prefix: this.filenameForm.controls[d.name].value});
     });
+
+    console.log(newSession);
 
     return newSession;
   }

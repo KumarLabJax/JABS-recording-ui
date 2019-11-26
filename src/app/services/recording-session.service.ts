@@ -21,15 +21,11 @@ export class RecordingSessionService {
       fragment_hourly: session.fragment_hourly,
       target_fps: session.target_fps,
       apply_filter: session.apply_filter,
-      device_ids: session.device_ids
+      device_spec: session.device_spec
     };
 
     if (session.notes) {
       payload[`notes`] = session.notes;
-    }
-
-    if (session.file_prefixes) {
-      payload[`file_prefixes`] = session.file_prefixes;
     }
 
     const headers = new HttpHeaders().set('Content-Type', 'application/json')

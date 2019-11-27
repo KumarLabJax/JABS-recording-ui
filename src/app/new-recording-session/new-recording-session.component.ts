@@ -232,8 +232,6 @@ export class NewRecordingSessionComponent implements OnInit {
       newSession.device_spec.push({device_id: d.id, filename_prefix: this.filenameForm.controls[d.name].value});
     });
 
-    console.log(newSession);
-
     return newSession;
   }
 

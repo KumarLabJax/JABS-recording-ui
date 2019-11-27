@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DeviceComponent } from './device/device.component';
@@ -19,6 +18,7 @@ import {
   MatSnackBarModule,
   MatStepperModule,
   MatTableModule,
+  MatTabsModule,
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
@@ -34,6 +34,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DurationPipe, SessionTableComponent } from './session-table/session-table.component';
 import { CancelConfirmationDialogComponent } from './session-table/cancel-confirmation-dialog/cancel-confirmation-dialog.component';
 import { FileprefixGroupSetDialogComponent } from './new-recording-session/fileprefix-group-set-dialog/fileprefix-group-set-dialog.component';
+import { TabsComponent } from './tabs/tabs.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { FileprefixGroupSetDialogComponent } from './new-recording-session/filep
     SessionTableComponent,
     DurationPipe,
     CancelConfirmationDialogComponent,
-    FileprefixGroupSetDialogComponent
+    FileprefixGroupSetDialogComponent,
+    TabsComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +74,8 @@ import { FileprefixGroupSetDialogComponent } from './new-recording-session/filep
     MatSliderModule,
     MatSnackBarModule,
     MatTableModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

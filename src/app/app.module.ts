@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DeviceComponent } from './device/device.component';
@@ -12,7 +11,11 @@ import {
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatSliderModule, MatSnackBarModule, MatStepperModule,
+  MatInputModule,
+  MatSliderModule,
+  MatSnackBarModule,
+  MatStepperModule,
+  MatTabsModule,
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
@@ -25,6 +28,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { NewRecordingSessionComponent } from './new-recording-session/new-recording-session.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TabsComponent } from './tabs/tabs.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FormatSecondsPipe,
     DashboardComponent,
     ToolbarComponent,
-    NewRecordingSessionComponent
+    NewRecordingSessionComponent,
+    TabsComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +62,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     ReactiveFormsModule,
     DragDropModule,
     MatSliderModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

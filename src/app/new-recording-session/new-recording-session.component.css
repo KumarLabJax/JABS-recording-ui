@@ -13,12 +13,16 @@
 }
 
 .time-field {
-  width: 80px;
+  width: 70px;
   margin-left: 10px;
 }
 
 .slider {
   max-width: 150px;
+}
+
+.stepper-controls {
+  padding-top: 10px;
 }
 
 .drag-list-container {
@@ -55,3 +59,6 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
+.bulk-assign-button {
+  margin-bottom: 1em;
+}

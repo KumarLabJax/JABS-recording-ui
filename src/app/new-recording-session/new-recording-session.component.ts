@@ -3,12 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Device } from '../shared/device';
 import { DeviceService } from '../services/device.service';
 import { first } from 'rxjs/operators';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { MatSliderChange, MatSnackBar } from '@angular/material';
+import { CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MatDialog, MatSliderChange, MatSnackBar } from '@angular/material';
 import { RecordingSessionService } from '../services/recording-session.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { RecordingSession } from '../shared/recording-session';
+import { FileprefixGroupSetDialogComponent } from './fileprefix-group-set-dialog/fileprefix-group-set-dialog.component';
 
 @Component({
   selector: 'app-new-recording-session',
@@ -40,7 +41,6 @@ export class NewRecordingSessionComponent implements OnInit {
     hours: new FormControl(0, [Validators.min(0), Validators.max(23)]),
     minutes: new FormControl(0, [Validators.min(0), Validators.max(59)]),
     seconds: new FormControl(0, [Validators.min(0), Validators.max(59)]),
-    filePrefix: new FormControl(),
     fragmentHourly: new FormControl(true)
   }, (formGroup: FormGroup) => {
     return NewRecordingSessionComponent.validateSettings(formGroup);
@@ -52,11 +52,15 @@ export class NewRecordingSessionComponent implements OnInit {
     applyFilter: new FormControl(true)
   });
 
+  // form group for filename prefixes
+  filenameForm = new FormGroup({});
+
   constructor(private deviceService: DeviceService,
               private recordingSessionService: RecordingSessionService,
               private snackbar: MatSnackBar,
               private router: Router,
-              private location: Location) { }
+              private location: Location,
+              private dialog: MatDialog) { }
 
   /**
    * custom validator for duration (days, hours, minutes, seconds) fields:
@@ -84,7 +88,13 @@ export class NewRecordingSessionComponent implements OnInit {
   ngOnInit() {
     this.deviceService.getIdleDevices().pipe(first()).subscribe(
       (data) => {
+        // get all idle devices
         this.idleDevices = data;
+
+        // make sure list of devices is sorted by name
+        this.idleDevices.sort((a, b) => a.name.localeCompare(b.name));
+
+        // setup filtered list
         this.filteredDevices = this.idleDevices.filter(this.filterCallback, this);
       }, err => {
         console.error('error getting idle devices: ', err);
@@ -121,13 +131,29 @@ export class NewRecordingSessionComponent implements OnInit {
    * @param event DragDrop event
    */
   drop(event: CdkDragDrop<Device[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
+    // only do something if the device was dropped onto a different container
+    if (event.previousContainer !== event.container) {
+      const device: Device = event.previousContainer.data[event.previousIndex];
+
+      // move the device from one array to another
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
+
+      // sort the array the item is being moved into
+      event.container.data.sort((a, b) => a.name.localeCompare(b.name));
+
+      if (event.container.data === this.filteredDevices) {
+        // if the destination was filteredDevices, refilter it's possible that the device should
+        // be hidden with the current value in the device filter
+        this.filteredDevices = this.idleDevices.filter(this.filterCallback, this);
+        // remove this device from the filename form
+        this.filenameForm.removeControl(device.name);
+      } else {
+        // device is added to selected devices, add it to the form group
+        this.filenameForm.addControl(device.name, new FormControl('video_recording', Validators.required));
+      }
     }
   }
 
@@ -192,22 +218,21 @@ export class NewRecordingSessionComponent implements OnInit {
       this.newSessionForm.value.seconds
     );
 
-    const ids: number[] = [];
-
-    this.selectedDevices.forEach(d => {
-      ids.push(d.id);
-    });
-
-    return {
-      device_ids: ids,
+    const newSession = {
       name: this.metadataForm.value.name,
       notes: this.metadataForm.value.notes,
       duration,
-      file_prefix: this.newSessionForm.value.filePrefix,
       fragment_hourly: this.newSessionForm.value.fragmentHourly,
       target_fps: this.advancedSettingsForm.value.targetFps,
-      apply_filter: this.advancedSettingsForm.value.applyFilter
+      apply_filter: this.advancedSettingsForm.value.applyFilter,
+      device_spec: []
     };
+
+    this.selectedDevices.forEach(d => {
+      newSession.device_spec.push({device_id: d.id, filename_prefix: this.filenameForm.controls[d.name].value});
+    });
+
+    return newSession;
   }
 
   /**
@@ -215,14 +240,69 @@ export class NewRecordingSessionComponent implements OnInit {
    * our list of devices
    */
   public filterCallback(element) {
+    if (this.selectedDevices.indexOf(element) >= 0 ) {
+      return false;
+    }
     return !this.filter || this.filter && element.name.toLowerCase().indexOf(this.filter) >= 0;
   }
 
+  /**
+   * update the filter value
+   * @param event keyup event from filter input field
+   */
   public updateFilter(event) {
     this.filter = event.target.value.trim().toLowerCase();
 
     if (this.idleDevices.length) {
       this.filteredDevices = this.idleDevices.filter(this.filterCallback, this);
     }
+  }
+
+  /**
+   * assign all devices currently listed in the available device list
+   */
+  public assignAll() {
+    // for each device in the filteredDevices list, add to selectedDevices and add a FormControl to the filenameForm
+    this.filteredDevices.forEach(d => {
+      this.selectedDevices.push(d);
+      this.filenameForm.addControl(d.name, new FormControl('video_recording', Validators.required));
+    });
+
+    // re-sort selectedDevices list
+    this.selectedDevices.sort((a, b) => a.name.localeCompare(b.name));
+
+    // clear filtered devies
+    this.filteredDevices = [];
+  }
+
+  /**
+   * handle clicking on the bulk filename assignment button
+   */
+  public clickBulkFilenameAssignment() {
+
+    // open a dialog for the user to enter a list of filenames
+    const dialogRef = this.dialog.open(FileprefixGroupSetDialogComponent, {
+      data: {expectedCount: this.selectedDevices.length}
+    });
+
+    // wait for the dialog to close
+    dialogRef.afterClosed().subscribe(response => {
+      // if a response was returned (user clicked "SAVE")
+      if (response) {
+        // split the contents of the textarea into lines
+        const lines = response.split(/\r*\n/);
+        // ignore the last line if it was all whitespace (user may have pressed enter after their last filename)
+        if (lines[lines.length - 1].trim().length === 0) {
+          lines.pop();
+        }
+
+        // iterate over each remaining line and set the corresponding device filename to that value
+        lines.forEach((l: string, index: number) => {
+          // remove characters that might cause issues for filenames
+          const filename = l.replace(/[.*+?^${}()|[\]\\\s]/g, '');
+          this.filenameForm.controls[this.selectedDevices[index].name].setValue(filename);
+        });
+      }
+    });
   }
 }

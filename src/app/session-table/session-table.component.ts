@@ -84,12 +84,19 @@ export class SessionTableComponent implements OnInit, OnDestroy {
    * @param deviceStatus device session status object for device user wants to stop
    */
   onClickStopDevice(sessionID: number, deviceStatus: any) {
-    deviceStatus.status = 'CANCELING...';
-    this.recordingSessionService.stopDevice(sessionID, deviceStatus.device_id).subscribe(() => {
-      deviceStatus.status = 'CANCELED';
-    }, err => {
-      this.openSnackbar('Error canceling session on device ' + deviceStatus.name);
-      console.error(err);
+    const dialogRef = this.dialog.open(CancelConfirmationDialogComponent,
+      {data: {stop_device: true, device_name: deviceStatus.device_name}});
+
+    dialogRef.afterClosed().subscribe(response => {
+      if (response) {
+        deviceStatus.status = 'CANCELING...';
+        this.recordingSessionService.stopDevice(sessionID, deviceStatus.device_id).subscribe(() => {
+          deviceStatus.status = 'CANCELED';
+        }, err => {
+          this.openSnackbar('Error canceling session on device ' + deviceStatus.name);
+          console.error(err);
+        });
+      }
     });
   }
 

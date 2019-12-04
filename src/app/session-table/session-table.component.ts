@@ -71,6 +71,29 @@ export class SessionTableComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * handle user click on button to open live stream for a device
+   * @param deviceId ID of device user wants to view
+   */
+  onClickOpenStream(deviceId: number) {
+    // TODO: not yet implemented
+  }
+
+  /**
+   * handle user click on cancel icon for device in recording session
+   * @param sessionID session ID that the device is a member of
+   * @param deviceStatus device session status object for device user wants to stop
+   */
+  onClickStopDevice(sessionID: number, deviceStatus: any) {
+    deviceStatus.status = 'CANCELING...';
+    this.recordingSessionService.stopDevice(sessionID, deviceStatus.device_id).subscribe(() => {
+      deviceStatus.status = 'CANCELED';
+    }, err => {
+      this.openSnackbar('Error canceling session on device ' + deviceStatus.name);
+      console.error(err);
+    });
+  }
+
+  /**
    * remove a session from our list of sessions, called after delete icon clicked
    * @param session - session to remove
    */

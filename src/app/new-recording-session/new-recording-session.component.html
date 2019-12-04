@@ -13,9 +13,6 @@
                 <mat-form-field class="large-text">
                   <input matInput type="text" placeholder="Recording Session Name" formControlName="name" required>
                 </mat-form-field>
-                <mat-form-field class="notes" appearance="outline">
-                  <textarea matInput placeholder="Recording Session Notes" formControlName="notes"  rows="8"></textarea>
-                </mat-form-field>
                 <div class="stepper-controls">
                   <button mat-button matStepperNext color="primary" [disabled]="!metadataForm.valid">CONTINUE</button>
                 </div>

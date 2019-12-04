@@ -6,7 +6,8 @@ import { DeviceComponent } from './device/device.component';
 import { DeviceListComponent } from './device-list/device-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
-  MatButtonModule, MatCardModule,
+  MatButtonModule,
+  MatCardModule,
   MatCheckboxModule,
   MatDialogModule,
   MatFormFieldModule,
@@ -15,6 +16,7 @@ import {
   MatSliderModule,
   MatSnackBarModule,
   MatStepperModule,
+  MatTableModule,
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule
@@ -28,6 +30,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { NewRecordingSessionComponent } from './new-recording-session/new-recording-session.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { DurationPipe, SessionTableComponent } from './session-table/session-table.component';
+import { CancelConfirmationDialogComponent } from './session-table/cancel-confirmation-dialog/cancel-confirmation-dialog.component';
 import { TabsComponent } from './tabs/tabs.component';
 
 @NgModule({
@@ -40,6 +44,9 @@ import { TabsComponent } from './tabs/tabs.component';
     DashboardComponent,
     ToolbarComponent,
     NewRecordingSessionComponent,
+    SessionTableComponent,
+    DurationPipe,
+    CancelConfirmationDialogComponent,
     TabsComponent
   ],
   imports: [
@@ -63,10 +70,14 @@ import { TabsComponent } from './tabs/tabs.component';
     DragDropModule,
     MatSliderModule,
     MatSnackBarModule,
+    MatTableModule,
     MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DeviceInfoDialogComponent]
+  entryComponents: [
+    DeviceInfoDialogComponent,
+    CancelConfirmationDialogComponent
+  ]
 })
 export class AppModule { }

@@ -192,15 +192,21 @@ export class NewRecordingSessionComponent implements OnInit {
       this.newSessionForm.value.seconds
     );
 
+    const ids: number[] = [];
+
+    this.selectedDevices.forEach(d => {
+      ids.push(d.id);
+    });
+
     return {
-      devices: this.selectedDevices,
+      device_ids: ids,
       name: this.metadataForm.value.name,
       notes: this.metadataForm.value.notes,
       duration,
-      filePrefix: this.newSessionForm.value.filePrefix,
-      fragmentHourly: this.newSessionForm.value.fragmentHourly,
-      targetFps: this.advancedSettingsForm.value.targetFps,
-      applyFilter: this.advancedSettingsForm.value.applyFilter
+      file_prefix: this.newSessionForm.value.filePrefix,
+      fragment_hourly: this.newSessionForm.value.fragmentHourly,
+      target_fps: this.advancedSettingsForm.value.targetFps,
+      apply_filter: this.advancedSettingsForm.value.applyFilter
     };
   }
 
@@ -209,7 +215,6 @@ export class NewRecordingSessionComponent implements OnInit {
    * our list of devices
    */
   public filterCallback(element) {
-    console.log(this.filter);
     return !this.filter || this.filter && element.name.toLowerCase().indexOf(this.filter) >= 0;
   }
 

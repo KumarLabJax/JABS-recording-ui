@@ -29,10 +29,10 @@
         <td mat-cell *matCellDef="let session">
           <span fxFlex></span>
           <button mat-icon-button *ngIf="session.status !== 'IN_PROGRESS'" (click)="onClickDelete(session);$event.stopPropagation()">
-            <mat-icon [color]="'primary'" matTooltip="Delete">delete</mat-icon>
+            <mat-icon color="primary" matTooltip="Delete">delete</mat-icon>
           </button>
           <button mat-icon-button *ngIf="session.status === 'IN_PROGRESS'" (click)="onClickCancel(session);$event.stopPropagation()">
-            <mat-icon [color]="'primary'" matTooltip="Cancel">cancel</mat-icon>
+            <mat-icon color="primary" matTooltip="Cancel">cancel</mat-icon>
           </button>
         </td>
       </ng-container>

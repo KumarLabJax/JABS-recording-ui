@@ -13,7 +13,6 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatProgressSpinnerModule,
   MatSliderModule,
   MatSnackBarModule,
   MatStepperModule,
@@ -74,7 +73,6 @@ import { TabsComponent } from './tabs/tabs.component';
     MatSliderModule,
     MatSnackBarModule,
     MatTableModule,
-    MatProgressSpinnerModule,
     MatTabsModule
   ],
   providers: [],

@@ -241,7 +241,7 @@ export class NewRecordingSessionComponent implements OnInit {
     if (this.selectedDevices.indexOf(element) >= 0 ) {
       return false;
     }
-    return !this.filter || this.filter && element.name.toLowerCase().indexOf(this.filter) >= 0;
+    return !this.filter || element.name.toLowerCase().indexOf(this.filter) >= 0 || element.location.toLowerCase().indexOf(this.filter) >= 0;
   }
 
   /**

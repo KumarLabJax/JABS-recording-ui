@@ -9,6 +9,13 @@
       </button>
     </div>
 
+    <div *ngIf="device.location" fxLayout="row" fxLayoutGap="5px">
+      <div class="section">Location:</div>
+      <div >
+        {{device.location}}
+      </div>
+    </div>
+
     <div class="section">Camera Status:</div>
     <div class="content">
       <div>

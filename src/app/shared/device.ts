@@ -1,8 +1,3 @@
-export interface Location {
-  name: string;
-  parent: Location | null;
-}
-
 export interface SysInfo {
   uptime: number;
   free_disk: number;
@@ -15,9 +10,9 @@ export interface SysInfo {
 export interface Device {
   name: string;
   id: number;
+  location?: string;
   last_update: string;
   state: string;
   sensor_status: object;
   system_info: SysInfo;
-  location?: Location;
 }

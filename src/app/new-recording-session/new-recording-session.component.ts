@@ -215,7 +215,6 @@ export class NewRecordingSessionComponent implements OnInit {
    * our list of devices
    */
   public filterCallback(element) {
-    console.log(this.filter);
     return !this.filter || this.filter && element.name.toLowerCase().indexOf(this.filter) >= 0;
   }
 

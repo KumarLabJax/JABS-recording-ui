@@ -15,9 +15,6 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-
-
-
     <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
       <mat-form-field>
         <input matInput placeholder="Filter Devices" (keyup)="updateFilter($event)">
@@ -26,7 +23,6 @@
       <mat-checkbox color="primary" [checked]="true" (change)="stateFilters.busy = !stateFilters.busy">Busy</mat-checkbox>
       <mat-checkbox color="primary" [checked]="true" (change)="stateFilters.down = !stateFilters.down">Down</mat-checkbox>
     </div>
-
     <app-device-list
       (deviceSummary)="deviceSummary=$event"
       [filter]="filter"

@@ -3,6 +3,13 @@
 
   <div *ngIf="device.state != 'DOWN'; else down">
 
+    <div *ngIf="device.location" fxLayout="row" fxLayoutGap="5px">
+      <div class="section">Location:</div>
+      <div >
+        {{device.location}}
+      </div>
+    </div>
+
     <div class="section">Camera Status:</div>
     <div class="content">
       <div>State:<span fxFlex></span>{{device.sensor_status['camera']['recording'] ? 'recording' : 'off'}}</div>

@@ -122,8 +122,10 @@ export class DeviceListComponent implements OnInit, OnDestroy, OnChanges {
       // the state of this device is hidden, return false
       return false;
     } else if (
-      this.filter &&
-      (element.name.toLowerCase().indexOf(this.filter) === -1 && element.location.toLowerCase().indexOf(this.filter) === -1)
+      this.filter && (
+        element.name.toLowerCase().indexOf(this.filter) === -1 &&
+        element.location.toLowerCase().indexOf(this.filter) === -1
+      )
     ) {
       // the text filter has a value, throw out anything that doesn't match
       // for now we only search the device name

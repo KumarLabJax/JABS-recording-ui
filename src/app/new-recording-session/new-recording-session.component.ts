@@ -31,8 +31,7 @@ export class NewRecordingSessionComponent implements OnInit {
 
   // form group for collecting metadata about recording session
   metadataForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    notes: new FormControl()
+    name: new FormControl('', Validators.required)
   });
 
   // form group for collecing basic information about the recording session
@@ -220,7 +219,6 @@ export class NewRecordingSessionComponent implements OnInit {
 
     const newSession = {
       name: this.metadataForm.value.name,
-      notes: this.metadataForm.value.notes,
       duration,
       fragment_hourly: this.newSessionForm.value.fragmentHourly,
       target_fps: this.advancedSettingsForm.value.targetFps,

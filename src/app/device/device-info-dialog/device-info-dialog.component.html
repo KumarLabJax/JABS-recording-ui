@@ -1,7 +1,13 @@
-<h1 mat-dialog-title>{{device.name}}</h1>
+<h1 mat-dialog-title>
+  {{device.name}}
+</h1>
 <mat-dialog-content class="mat-typography">
-
   <div *ngIf="device.state != 'DOWN'; else down">
+    <div>
+      <button *ngIf="device.sensor_status['camera']['recording']" mat-icon-button (click)="onClickOpenStream(device.id)" tabindex="-1">
+        <mat-icon color="primary" matTooltip="open live stream">ondemand_video</mat-icon>
+      </button>
+    </div>
 
     <div *ngIf="device.location" fxLayout="row" fxLayoutGap="5px">
       <div class="section">Location:</div>
@@ -12,7 +18,9 @@
 
     <div class="section">Camera Status:</div>
     <div class="content">
-      <div>State:<span fxFlex></span>{{device.sensor_status['camera']['recording'] ? 'recording' : 'off'}}</div>
+      <div>
+        State:<span fxFlex></span>{{device.sensor_status['camera']['recording'] ? 'recording' : 'off'}}
+      </div>
       <div *ngIf="device.sensor_status['camera']['recording']">
         <div>Duration:<span fxFlex></span>{{device.sensor_status['camera']['duration'] | formatSeconds}}</div>
         <div>Frame rate:<span fxFlex></span>{{device.sensor_status['camera']['fps'] | number:'.0-1'}}</div>

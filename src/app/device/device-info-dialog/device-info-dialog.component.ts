@@ -32,7 +32,18 @@ export class DeviceInfoDialogComponent implements OnInit {
     this.warnings = this.data.warnings;
   }
 
+  /**
+   * handle click for dialog close button
+   */
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  /**
+   * handle user click on button to open live stream for a device
+   * @param deviceId ID of device user wants to view
+   */
+  onClickOpenStream(deviceId: number) {
+    // TODO: not yet implemented
   }
 }

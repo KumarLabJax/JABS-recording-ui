@@ -24,10 +24,6 @@ export class RecordingSessionService {
       device_spec: session.device_spec
     };
 
-    if (session.notes) {
-      payload[`notes`] = session.notes;
-    }
-
     const headers = new HttpHeaders().set('Content-Type', 'application/json')
 
     return this.http.post<RecordingSession>(this.baseURL, payload, {headers}).pipe(retry(3));
@@ -41,6 +37,11 @@ export class RecordingSessionService {
   public cancelSession(session: RecordingSession) {
     return this.http.delete<any>(this.baseURL + '/' + session.id).pipe(retry(3));
   }
+
+  public stopDevice(sessionID: number, deviceID: number) {
+    return this.http.delete<any>(this.baseURL + '/' + sessionID + '/device-status/' + deviceID).pipe(retry(3));
+  }
+
   public archiveSession(session: RecordingSession) {
     const parameters = new HttpParams().set('archive', 'true');
     return this.http.delete<any>(this.baseURL + '/' + session.id, {params: parameters}).pipe(retry(3));

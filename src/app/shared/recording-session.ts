@@ -1,7 +1,6 @@
 
 export interface RecordingSession {
   name: string;
-  notes?: string;
   duration: number;
   fragment_hourly: boolean;
   target_fps: number;

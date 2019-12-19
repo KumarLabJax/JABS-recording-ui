@@ -6,6 +6,10 @@ tr.example-detail-row {
   height: 0;
 }
 
+tr.example-expanded-row {
+  background: whitesmoke;
+}
+
 tr.example-element-row:not(.example-expanded-row):hover {
    background: #efefef;
    cursor: pointer;
@@ -23,12 +27,18 @@ tr.example-element-row:hover {
   overflow: hidden;
 }
 
-.device-status-attribute {
-  margin-left: 10px;
-}
-
 .device-status-name {
   font-weight: bolder;
-  margin-left: 5px;
 }
 
+.device-column-header {
+  font-weight: bolder;
+}
+
+.device-summary {
+  margin: 1em;
+}
+
+.session-name {
+  font-weight: bolder;
+}

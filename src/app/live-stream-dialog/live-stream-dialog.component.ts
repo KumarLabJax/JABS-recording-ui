@@ -28,7 +28,8 @@ export class LiveStreamDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // TODO we will eventually get the src from the server rather that build it here
+    // TODO get the url for the stream from the server rather that build it here
+    // this hard coded streaming server address will go away once above task is done
     this.videoSource = [
       {
         src: 'http://kumar-dell-7810.jax.org/' + this.data.device.name.toLowerCase() + '.m3u8',

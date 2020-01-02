@@ -38,10 +38,6 @@ export class LiveStreamDialogComponent implements OnInit {
     ];
   }
 
-  played(event: Plyr.PlyrEvent) {
-    console.log('played');
-  }
-
   play(): void {
     this.plyr.player.play();
   }

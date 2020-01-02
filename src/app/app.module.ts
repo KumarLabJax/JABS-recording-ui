@@ -34,6 +34,10 @@ import { DurationPipe, SessionTableComponent } from './session-table/session-tab
 import { CancelConfirmationDialogComponent } from './session-table/cancel-confirmation-dialog/cancel-confirmation-dialog.component';
 import { FileprefixGroupSetDialogComponent } from './new-recording-session/fileprefix-group-set-dialog/fileprefix-group-set-dialog.component';
 import { TabsComponent } from './tabs/tabs.component';
+import { LiveStreamDialogComponent } from './live-stream-dialog/live-stream-dialog.component';
+import { LiveStreamButtonComponent } from './live-stream-button/live-stream-button.component';
+import { PlyrModule } from 'ngx-plyr';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +53,9 @@ import { TabsComponent } from './tabs/tabs.component';
     DurationPipe,
     CancelConfirmationDialogComponent,
     FileprefixGroupSetDialogComponent,
-    TabsComponent
+    TabsComponent,
+    LiveStreamDialogComponent,
+    LiveStreamButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -73,14 +79,16 @@ import { TabsComponent } from './tabs/tabs.component';
     MatSliderModule,
     MatSnackBarModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    PlyrModule
   ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
     DeviceInfoDialogComponent,
     CancelConfirmationDialogComponent,
-    FileprefixGroupSetDialogComponent
+    FileprefixGroupSetDialogComponent,
+    LiveStreamDialogComponent
   ]
 })
 export class AppModule { }

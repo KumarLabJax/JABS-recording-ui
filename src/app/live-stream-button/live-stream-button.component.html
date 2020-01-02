@@ -1,0 +1,3 @@
+<button *ngIf="device.sensor_status['camera']['recording']" mat-icon-button (click)="openViewerDialog(device.id)" tabindex="-1">
+  <mat-icon color="primary" matTooltip="open live stream">ondemand_video</mat-icon>
+</button>

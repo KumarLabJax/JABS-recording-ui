@@ -10,6 +10,7 @@ import { HlsjsPlyrDriver } from '../hlsjs-plyr-driver';
   styleUrls: ['./live-stream-dialog.component.css']
 })
 export class LiveStreamDialogComponent implements OnInit {
+  // get the Plyr component from the page
   @ViewChild(PlyrComponent, {static: true}) plyr: PlyrComponent;
 
   hlsjsDriver = new HlsjsPlyrDriver(true);

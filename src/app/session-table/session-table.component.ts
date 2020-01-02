@@ -90,10 +90,10 @@ export class SessionTableComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
         deviceStatus.status = 'CANCELING...';
-        this.recordingSessionService.stopDevice(sessionID, deviceStatus.device_id).subscribe(() => {
+        this.recordingSessionService.stopDevice(sessionID, deviceStatus.device.id).subscribe(() => {
           deviceStatus.status = 'CANCELED';
         }, err => {
-          this.openSnackbar('Error canceling session on device ' + deviceStatus.name);
+          this.openSnackbar('Error canceling session on device ' + deviceStatus.device.name);
           console.error(err);
         });
       }

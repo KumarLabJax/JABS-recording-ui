@@ -19,7 +19,7 @@ export class LiveStreamDialogComponent implements OnInit {
 
   options = {
     autoplay: true,
-    controls: ['play-large', 'play', 'progress', 'current-time', 'fullscreen'],
+    controls: ['fullscreen'],
     ratio: '1:1'
   };
 
@@ -37,9 +37,5 @@ export class LiveStreamDialogComponent implements OnInit {
         type: 'video'
       },
     ];
-  }
-
-  play(): void {
-    this.plyr.player.play();
   }
 }

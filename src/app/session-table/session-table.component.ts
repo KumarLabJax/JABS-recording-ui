@@ -71,14 +71,6 @@ export class SessionTableComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * handle user click on button to open live stream for a device
-   * @param deviceId ID of device user wants to view
-   */
-  onClickOpenStream(deviceId: number) {
-    // TODO: not yet implemented
-  }
-
-  /**
    * handle user click on cancel icon for device in recording session
    * @param sessionID session ID that the device is a member of
    * @param deviceStatus device session status object for device user wants to stop
@@ -90,6 +82,7 @@ export class SessionTableComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
         deviceStatus.status = 'CANCELING...';
+        this.openSnackbar('Sending cancel message to device.');
         this.recordingSessionService.stopDevice(sessionID, deviceStatus.device.id).subscribe(() => {
           deviceStatus.status = 'CANCELED';
         }, err => {
@@ -177,9 +170,5 @@ export class DurationPipe implements PipeTransform {
     value -= minutes * 60;
 
     return DurationPipe.pad(days) + ':' + DurationPipe.pad(hours) + ':' + DurationPipe.pad(minutes) + ':' + DurationPipe.pad(value);
-
   }
-
-
-
 }

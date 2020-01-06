@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import Plyr from 'plyr';
 import { PlyrComponent } from 'ngx-plyr';
-import { HlsjsPlyrDriver } from '../hlsjs-plyr-driver';
+import { HlsjsPlyrDriver } from './hlsjs-plyr-driver';
 
 @Component({
   selector: 'app-live-stream-dialog',
@@ -17,6 +17,8 @@ export class LiveStreamDialogComponent implements OnInit {
 
   videoSource: Plyr.Source[];
 
+  // player options
+  // TODO: get aspect ratio from device rather than hard code 1:1
   options = {
     autoplay: true,
     controls: ['fullscreen'],
@@ -29,8 +31,9 @@ export class LiveStreamDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // TODO get the url for the stream from the server rather that build it here
-    // this hard coded streaming server address will go away once above task is done
+    // TODO get the url for the stream from the server rather than build it here
+    // this hard coded streaming server address will go away once above task is done,
+    // but it requires server-side support
     this.videoSource = [
       {
         src: 'http://kumar-dell-7810.jax.org/' + this.data.device.name.toLowerCase() + '.m3u8',

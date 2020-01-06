@@ -34,6 +34,7 @@ import { DurationPipe, SessionTableComponent } from './session-table/session-tab
 import { CancelConfirmationDialogComponent } from './session-table/cancel-confirmation-dialog/cancel-confirmation-dialog.component';
 import { FileprefixGroupSetDialogComponent } from './new-recording-session/fileprefix-group-set-dialog/fileprefix-group-set-dialog.component';
 import { TabsComponent } from './tabs/tabs.component';
+import { RemoveConfirmationDialogComponent } from './session-table/remove-confirmation-dialog/remove-confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { TabsComponent } from './tabs/tabs.component';
     DurationPipe,
     CancelConfirmationDialogComponent,
     FileprefixGroupSetDialogComponent,
-    TabsComponent
+    TabsComponent,
+    RemoveConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +82,8 @@ import { TabsComponent } from './tabs/tabs.component';
   entryComponents: [
     DeviceInfoDialogComponent,
     CancelConfirmationDialogComponent,
-    FileprefixGroupSetDialogComponent
+    FileprefixGroupSetDialogComponent,
+    RemoveConfirmationDialogComponent
   ]
 })
 export class AppModule { }

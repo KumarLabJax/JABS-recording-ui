@@ -1,0 +1,13 @@
+<section class="mat-typography">
+  <h1 mat-dialog-title >Remove "{{data.sessionName}}"?</h1>
+  <mat-dialog-content>
+    <p>
+      Are you sure you want to remove this session from the history?
+      This will <i>not</i> remove any data on the device that is associated with this session.
+    </p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="dialogRef.close(false)">NO</button>
+    <button mat-button color="primary" (click)="dialogRef.close(true)">YES</button>
+  </mat-dialog-actions>
+</section>

@@ -13,8 +13,10 @@ export class LiveStreamDialogComponent implements OnInit {
   // get the Plyr component from the page
   @ViewChild(PlyrComponent, {static: true}) plyr: PlyrComponent;
 
+  // driver for plyr to configure it to play HLS video
   hlsjsDriver = new HlsjsPlyrDriver(true);
 
+  // plyr video source, will be set to device HLS live stream url
   videoSource: Plyr.Source[];
 
   // player options

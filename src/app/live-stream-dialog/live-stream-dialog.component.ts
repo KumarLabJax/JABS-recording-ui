@@ -20,7 +20,7 @@ export class LiveStreamDialogComponent implements OnInit {
   videoSource: Plyr.Source[];
 
   // player options
-  // TODO: get aspect ratio from device rather than hard code 1:1
+  // TODO: get aspect ratio from device rather than hard code 1:1 (requires server support)
   options = {
     autoplay: true,
     controls: ['fullscreen'],

@@ -12,11 +12,15 @@ export class DeviceComponent {
 
 
   @Input() data: Device;
+  @Input() clickable = true;
 
 
   constructor(private dialog: MatDialog) {}
 
   public openDetailsDialog() {
+    if (!this.clickable) {
+      return;
+    }
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       device: this.data,

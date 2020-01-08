@@ -1,4 +1,4 @@
-<div class="device-container mat-elevation-z1" (click)="openDetailsDialog()">
+<div [ngClass]="{'cursor': clickable}" class="device-container mat-elevation-z1" (click)="openDetailsDialog()">
   <div fxLayout="row" fxLayoutAlign="center center">
     <div fxLayout="column">
       <div class="device-name" >{{data.name}}</div>

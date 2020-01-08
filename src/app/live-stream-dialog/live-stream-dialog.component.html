@@ -3,17 +3,35 @@
 </h1>
 <mat-dialog-content class="mat-typography" >
 
-  <div fxLayout="row">
-      <div style="width: 300px; height: auto" plyr
+
+  <div *ngIf="err; else playerBlock">
+    <p>Live stream is currently unavailable</p>
+  </div>
+  <ng-template #playerBlock>
+    <div *ngIf="videoSource.length" fxLayout="row">
+      <div id="plyr" style="width: 400px; height: auto" plyr
            [plyrPlaysInline]="true"
            [plyrCrossOrigin]="true"
            [plyrDriver]="hlsjsDriver"
            [plyrOptions]="options"
-           [plyrSources]="videoSource"></div>
+           [plyrSources]="videoSource"
+      ></div>
+    </div>
+  </ng-template>
+
+  <div *ngIf="loading" fxLayout="column" class="spinner-container" fxLayoutAlign="space-around center" >
+    <div class="live-stream-loader">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div>
+      Loading...
+    </div>
   </div>
+
+
 
 </mat-dialog-content>
 
 <div mat-dialog-actions>
-  <button mat-stroked-button (click)="dialogRef.close()">Close</button>
+  <button mat-stroked-button (click)="onClickClose()">Close</button>
 </div>

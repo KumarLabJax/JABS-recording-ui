@@ -22,6 +22,7 @@ export class NewRecordingSessionComponent implements OnInit {
   public filteredDevices: Device[] = [];
   public selectedDevices: Device[] = [];
   public fpsLabel = 30;
+  public hideNonIdle = true;
 
   private filter = '';
 
@@ -238,6 +239,9 @@ export class NewRecordingSessionComponent implements OnInit {
    * our list of devices
    */
   public filterCallback(element) {
+    if (this.hideNonIdle && element.state !== 'IDLE') {
+      return false;
+    }
     if (this.selectedDevices.indexOf(element) >= 0 ) {
       return false;
     }
@@ -260,21 +264,34 @@ export class NewRecordingSessionComponent implements OnInit {
     }
   }
 
+  toggleIdleFilter(event) {
+    this.hideNonIdle = event.checked;
+
+    if (this.idleDevices.length) {
+      this.filteredDevices = this.idleDevices.filter(this.filterCallback, this);
+    }
+  }
+
   /**
    * assign all devices currently listed in the available device list
    */
   public assignAll() {
+    const unassignable: Device[] = [];
     // for each device in the filteredDevices list, add to selectedDevices and add a FormControl to the filenameForm
     this.filteredDevices.forEach(d => {
-      this.selectedDevices.push(d);
-      this.filenameForm.addControl(d.name, new FormControl('video_recording', Validators.required));
+      if (d.state === 'IDLE') {
+        this.selectedDevices.push(d);
+        this.filenameForm.addControl(d.name, new FormControl('video_recording', Validators.required));
+      } else {
+        unassignable.push(d);
+      }
     });
 
     // re-sort selectedDevices list
     this.selectedDevices.sort((a, b) => a.name.localeCompare(b.name));
 
-    // clear filtered devies
-    this.filteredDevices = [];
+    // set filteredDevices to anything that couldn't be assigned
+    this.filteredDevices = unassignable;
   }
 
   /**

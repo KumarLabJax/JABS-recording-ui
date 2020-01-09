@@ -6,7 +6,7 @@ import { mergeMap } from 'rxjs/operators';
  * with a delay between each attempt
  *
  * @param maxRetryAttempts - maximum number of times to try
- * @param delay - delay in ms between attempts
+ * @param delay - delay between attempts (in milliseconds)
  */
 export const retryStrategy = (
   {

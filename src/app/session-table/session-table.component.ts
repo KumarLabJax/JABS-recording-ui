@@ -6,6 +6,7 @@ import { Subject, timer } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatDialog, MatSnackBar, MatTable } from '@angular/material';
 import { CancelConfirmationDialogComponent } from './cancel-confirmation-dialog/cancel-confirmation-dialog.component';
+import { RemoveConfirmationDialogComponent } from './remove-confirmation-dialog/remove-confirmation-dialog.component';
 
 @Component({
   selector: 'app-session-table',
@@ -41,11 +42,18 @@ export class SessionTableComponent implements OnInit, OnDestroy {
    * @param session - which session the delete button was clicked on
    */
   onClickDelete(session) {
-    this.recordingSessionService.archiveSession(session).subscribe(() => {
-      this.removeSession(session);
-    }, err => {
-      this.openSnackbar('Error deleting session');
-      console.error(err);
+    const dialogRef = this.dialog.open(RemoveConfirmationDialogComponent,
+      {data: {sessionName: session.name}});
+
+    dialogRef.afterClosed().subscribe(response => {
+      if (response) {
+        this.recordingSessionService.archiveSession(session).subscribe(() => {
+          this.removeSession(session);
+        }, err => {
+          this.openSnackbar('Error deleting session');
+          console.error(err);
+        });
+      }
     });
   }
 
@@ -54,7 +62,6 @@ export class SessionTableComponent implements OnInit, OnDestroy {
    * @param session - session to cancel
    */
   onClickCancel(session) {
-
     const dialogRef = this.dialog.open(CancelConfirmationDialogComponent);
 
     dialogRef.afterClosed().subscribe(response => {

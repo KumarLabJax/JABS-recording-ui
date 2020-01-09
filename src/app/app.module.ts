@@ -37,7 +37,7 @@ import { TabsComponent } from './tabs/tabs.component';
 import { LiveStreamDialogComponent } from './live-stream-dialog/live-stream-dialog.component';
 import { LiveStreamButtonComponent } from './live-stream-button/live-stream-button.component';
 import { PlyrModule } from 'ngx-plyr';
-
+import { RemoveConfirmationDialogComponent } from './session-table/remove-confirmation-dialog/remove-confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +55,8 @@ import { PlyrModule } from 'ngx-plyr';
     FileprefixGroupSetDialogComponent,
     TabsComponent,
     LiveStreamDialogComponent,
-    LiveStreamButtonComponent
+    LiveStreamButtonComponent,
+    RemoveConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +89,8 @@ import { PlyrModule } from 'ngx-plyr';
     DeviceInfoDialogComponent,
     CancelConfirmationDialogComponent,
     FileprefixGroupSetDialogComponent,
-    LiveStreamDialogComponent
+    LiveStreamDialogComponent,
+    RemoveConfirmationDialogComponent
   ]
 })
 export class AppModule { }

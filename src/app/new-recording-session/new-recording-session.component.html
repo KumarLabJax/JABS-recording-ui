@@ -26,19 +26,23 @@
                     <label class="mat-typography">Duration: </label>
                     <mat-form-field class="time-field" appearance="standard">
                       <mat-label>Days</mat-label>
-                      <input matInput type="number" placeholder="Days" min="0" formControlName="days" min="0" max="14">
+                      <input matInput type="number" placeholder="Days" min="0"
+                             formControlName="days" min="0" max="14">
                     </mat-form-field>
                     <mat-form-field class="time-field" appearance="standard">
                       <mat-label>Hours</mat-label>
-                      <input matInput type="number"(ngModelChange)="onHourChange($event)" placeholder="Hours" min="0" formControlName="hours" min="0" max="24">
+                      <input matInput type="number"(ngModelChange)="onHourChange($event)"
+                             placeholder="Hours" min="0" formControlName="hours" min="0" max="24">
                     </mat-form-field>
                     <mat-form-field class="time-field" appearance="standard">
                       <mat-label>Minutes</mat-label>
-                      <input matInput type="number" (ngModelChange)="onMinuteChange($event)" placeholder="Minutes" min="0" formControlName="minutes" min="0" max="60">
+                      <input matInput type="number" (ngModelChange)="onMinuteChange($event)"
+                             placeholder="Minutes" min="0" formControlName="minutes" min="0" max="60">
                     </mat-form-field>
                     <mat-form-field class="time-field" appearance="standard">
                       <mat-label>Seconds</mat-label>
-                      <input matInput type="number" (ngModelChange)="onSecondChange($event)" placeholder="Seconds" min="0" formControlName="seconds" min="0" max="60">
+                      <input matInput type="number" (ngModelChange)="onSecondChange($event)"
+                             placeholder="Seconds" min="0" formControlName="seconds" min="0" max="60">
                     </mat-form-field>
                   </div>
                 </div>
@@ -89,7 +93,8 @@
                     [cdkDropListConnectedTo]="[assignedList]"
                     class="device-list"
                     (cdkDropListDropped)="drop($event)">
-                    <app-device [data]="device" [clickable]="false" *ngFor="let device of filteredDevices" cdkDrag [cdkDragDisabled]="device.state !== 'IDLE'"></app-device>
+                    <app-device [data]="device" [clickable]="false" *ngFor="let device of filteredDevices"
+                                cdkDrag [cdkDragDisabled]="device.state !== 'IDLE'"></app-device>
 
                   </div>
                 </div>
@@ -105,12 +110,14 @@
                     [cdkDropListConnectedTo]="[availableList]"
                     class="device-list"
                     (cdkDropListDropped)="drop($event)">
-                    <app-device [data]="device" [clickable]="false" *ngFor="let device of selectedDevices" cdkDrag></app-device>
+                    <app-device [data]="device" [clickable]="false"
+                                *ngFor="let device of selectedDevices" cdkDrag></app-device>
                   </div>
                 </div>
               </div>
 
-              <button mat-button color="primary" matTooltip="Assign all listed available devices to session" (click)="assignAll()" [disabled]="!filteredDevices.length">
+              <button mat-button color="primary" matTooltip="Assign all listed available devices to session"
+                      (click)="assignAll()" [disabled]="!filteredDevices.length">
                 Assign All <mat-icon>forward</mat-icon>
               </button>
 
@@ -121,7 +128,9 @@
             </mat-step>
 
             <mat-step label="File Names" [stepControl]="filenameForm">
-              <button class="bulk-assign-button" mat-button color="primary" matTooltip="bulk assign by pasting a list of filenames" (click)="clickBulkFilenameAssignment()">Bulk assign <mat-icon>assignment</mat-icon></button>
+              <button class="bulk-assign-button" mat-button color="primary"
+                      matTooltip="bulk assign by pasting a list of filenames"
+                      (click)="clickBulkFilenameAssignment()">Bulk assign <mat-icon>assignment</mat-icon></button>
               <form [formGroup]="filenameForm">
                 <span *ngFor="let d of selectedDevices">
                   <mat-form-field >

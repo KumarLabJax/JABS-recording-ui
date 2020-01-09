@@ -18,9 +18,12 @@ export class DeviceComponent {
   constructor(private dialog: MatDialog) {}
 
   public openDetailsDialog() {
+    // in some cases we don't want to do anything if the user clicks this component
     if (!this.clickable) {
       return;
     }
+
+    // component is clickable -- open the dialog
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       device: this.data,
@@ -44,7 +47,8 @@ export class DeviceComponent {
   }
 
   public lowMemoryWarning() {
-    // show warning if available RAM falls below 90%
-    return this.data.system_info.free_ram / this.data.system_info.total_ram < 0.1;
+    // show warning if available RAM falls below 20%
+    // TODO this should be configurable
+    return this.data.system_info.free_ram / this.data.system_info.total_ram < 0.2;
   }
 }

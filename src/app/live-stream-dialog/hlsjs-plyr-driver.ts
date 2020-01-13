@@ -37,7 +37,6 @@ export class HlsjsPlyrDriver implements PlyrDriver {
 
   create(params: PlyrDriverCreateParams) {
     this.hls.attachMedia(params.videoElement);
-
     return new Plyr(params.videoElement, params.options);
   }
 
@@ -53,6 +52,7 @@ export class HlsjsPlyrDriver implements PlyrDriver {
   destroy(params: PlyrDriverDestroyParams) {
     params.plyr.destroy();
     this.hls.detachMedia();
+    this.hls.destroy();
   }
 
   load(src: string) {

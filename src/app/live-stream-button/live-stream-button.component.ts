@@ -22,11 +22,6 @@ export class LiveStreamButtonComponent {
     dialogConfig.data = {
         device: this.device
     };
-    // TODO: try to get rid of these hard-coded dialog dimensions
-    // right now, without them, the dialog isn't large enough to show the entire video and
-    // we end up with a scroll bar
-    dialogConfig.height = '450px';
-    dialogConfig.width = '350px';
     this.dialog.open(LiveStreamDialogComponent, dialogConfig);
   }
 

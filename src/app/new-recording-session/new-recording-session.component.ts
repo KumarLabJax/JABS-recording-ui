@@ -18,10 +18,11 @@ import { FileprefixGroupSetDialogComponent } from './fileprefix-group-set-dialog
 })
 export class NewRecordingSessionComponent implements OnInit {
 
-  public idleDevices: Device[];
+  public allDevices: Device[];
   public filteredDevices: Device[] = [];
   public selectedDevices: Device[] = [];
   public fpsLabel = 30;
+  public hideNonIdle = true;
 
   private filter = '';
 
@@ -85,16 +86,16 @@ export class NewRecordingSessionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.deviceService.getIdleDevices().pipe(first()).subscribe(
+    // get list of all devices
+    this.deviceService.getDevices().pipe(first()).subscribe(
       (data) => {
-        // get all idle devices
-        this.idleDevices = data;
+        this.allDevices = data;
 
         // make sure list of devices is sorted by name
-        this.idleDevices.sort((a, b) => a.name.localeCompare(b.name));
+        this.allDevices.sort((a, b) => a.name.localeCompare(b.name));
 
         // setup filtered list
-        this.filteredDevices = this.idleDevices.filter(this.filterCallback, this);
+        this.filteredDevices = this.allDevices.filter(this.filterCallback, this);
       }, err => {
         console.error('error getting idle devices: ', err);
       }
@@ -146,7 +147,7 @@ export class NewRecordingSessionComponent implements OnInit {
       if (event.container.data === this.filteredDevices) {
         // if the destination was filteredDevices, refilter it's possible that the device should
         // be hidden with the current value in the device filter
-        this.filteredDevices = this.idleDevices.filter(this.filterCallback, this);
+        this.filteredDevices = this.allDevices.filter(this.filterCallback, this);
         // remove this device from the filename form
         this.filenameForm.removeControl(device.name);
       } else {
@@ -238,6 +239,9 @@ export class NewRecordingSessionComponent implements OnInit {
    * our list of devices
    */
   public filterCallback(element) {
+    if (this.hideNonIdle && element.state !== 'IDLE') {
+      return false;
+    }
     if (this.selectedDevices.indexOf(element) >= 0 ) {
       return false;
     }
@@ -255,8 +259,21 @@ export class NewRecordingSessionComponent implements OnInit {
   public updateFilter(event) {
     this.filter = event.target.value.trim().toLowerCase();
 
-    if (this.idleDevices.length) {
-      this.filteredDevices = this.idleDevices.filter(this.filterCallback, this);
+    if (this.allDevices.length) {
+      this.filteredDevices = this.allDevices.filter(this.filterCallback, this);
+    }
+  }
+
+  /**
+   * handle change in the idle filter toggle switch
+   * @param event - change event
+   */
+  toggleIdleFilter(event) {
+    this.hideNonIdle = event.checked;
+
+    // refilter list of devices based on new value of switch
+    if (this.allDevices.length) {
+      this.filteredDevices = this.allDevices.filter(this.filterCallback, this);
     }
   }
 
@@ -264,17 +281,22 @@ export class NewRecordingSessionComponent implements OnInit {
    * assign all devices currently listed in the available device list
    */
   public assignAll() {
+    const unassignable: Device[] = [];
     // for each device in the filteredDevices list, add to selectedDevices and add a FormControl to the filenameForm
     this.filteredDevices.forEach(d => {
-      this.selectedDevices.push(d);
-      this.filenameForm.addControl(d.name, new FormControl('video_recording', Validators.required));
+      if (d.state === 'IDLE') {
+        this.selectedDevices.push(d);
+        this.filenameForm.addControl(d.name, new FormControl('video_recording', Validators.required));
+      } else {
+        unassignable.push(d);
+      }
     });
 
     // re-sort selectedDevices list
     this.selectedDevices.sort((a, b) => a.name.localeCompare(b.name));
 
-    // clear filtered devies
-    this.filteredDevices = [];
+    // set filteredDevices to anything that couldn't be assigned
+    this.filteredDevices = unassignable;
   }
 
   /**

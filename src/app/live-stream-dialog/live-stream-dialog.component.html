@@ -1,9 +1,8 @@
 <h1 mat-dialog-title>
   {{data.device.name}} Live Stream
 </h1>
+
 <mat-dialog-content class="mat-typography" >
-
-
   <div *ngIf="err; else playerBlock">
     <p>Live stream is currently unavailable</p>
   </div>
@@ -19,7 +18,7 @@
     </div>
   </ng-template>
 
-  <div *ngIf="loading" fxLayout="column" class="spinner-container" fxLayoutAlign="space-around center" >
+  <div *ngIf="loading" fxLayout="column" class="spinner-container" fxLayoutAlign="space-around center">
     <div class="live-stream-loader">
       <mat-spinner></mat-spinner>
     </div>
@@ -27,9 +26,6 @@
       Loading...
     </div>
   </div>
-
-
-
 </mat-dialog-content>
 
 <div mat-dialog-actions>

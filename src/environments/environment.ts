@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  appName: 'Long Term Monitoring System',
+  appName: 'JAX Mouse Behavior Analysis (Dev)',
   api: 'http://bhltms-dev.jax.org/api/'
 };
 

@@ -26,19 +26,23 @@
                     <label class="mat-typography">Duration: </label>
                     <mat-form-field class="time-field" appearance="standard">
                       <mat-label>Days</mat-label>
-                      <input matInput type="number" placeholder="Days" min="0" formControlName="days" min="0" max="14">
+                      <input matInput type="number" placeholder="Days" min="0"
+                             formControlName="days" min="0" max="14">
                     </mat-form-field>
                     <mat-form-field class="time-field" appearance="standard">
                       <mat-label>Hours</mat-label>
-                      <input matInput type="number"(ngModelChange)="onHourChange($event)" placeholder="Hours" min="0" formControlName="hours" min="0" max="24">
+                      <input matInput type="number"(ngModelChange)="onHourChange($event)"
+                             placeholder="Hours" min="0" formControlName="hours" min="0" max="24">
                     </mat-form-field>
                     <mat-form-field class="time-field" appearance="standard">
                       <mat-label>Minutes</mat-label>
-                      <input matInput type="number" (ngModelChange)="onMinuteChange($event)" placeholder="Minutes" min="0" formControlName="minutes" min="0" max="60">
+                      <input matInput type="number" (ngModelChange)="onMinuteChange($event)"
+                             placeholder="Minutes" min="0" formControlName="minutes" min="0" max="60">
                     </mat-form-field>
                     <mat-form-field class="time-field" appearance="standard">
                       <mat-label>Seconds</mat-label>
-                      <input matInput type="number" (ngModelChange)="onSecondChange($event)" placeholder="Seconds" min="0" formControlName="seconds" min="0" max="60">
+                      <input matInput type="number" (ngModelChange)="onSecondChange($event)"
+                             placeholder="Seconds" min="0" formControlName="seconds" min="0" max="60">
                     </mat-form-field>
                   </div>
                 </div>
@@ -63,16 +67,23 @@
 
             <mat-step label="Select Devices" [stepControl]="">
 
-              <div fxLayout="row" fxLayoutAlign="start center" >
+              <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20px" style="margin-bottom: 15px">
                 <mat-form-field>
                   <input matInput placeholder="Filter Devices" (keyup)="updateFilter($event)">
+                  <mat-hint>Filter by name or location</mat-hint>
                 </mat-form-field>
+                <mat-slide-toggle
+                  color="primary"
+                  (change)="toggleIdleFilter($event)"
+                  [checked]="hideNonIdle"
+                >
+                  Only show idle devices
+                </mat-slide-toggle>
               </div>
-
 
               <div fxLayout="row">
                 <div class="drag-list-container">
-                  <h3 class="mat-typography">Available Devices</h3>
+                  <h4 class="mat-typography">Available Devices</h4>
 
                   <div
                     cdkDropList
@@ -82,13 +93,14 @@
                     [cdkDropListConnectedTo]="[assignedList]"
                     class="device-list"
                     (cdkDropListDropped)="drop($event)">
-                    <app-device [data]="device" *ngFor="let device of filteredDevices" cdkDrag></app-device>
+                    <app-device [data]="device" [clickable]="false" *ngFor="let device of filteredDevices"
+                                cdkDrag [cdkDragDisabled]="device.state !== 'IDLE'"></app-device>
 
                   </div>
                 </div>
 
                 <div class="drag-list-container">
-                  <h3 class="mat-typography">Assigned Devices</h3>
+                  <h4 class="mat-typography">Assigned Devices</h4>
 
                   <div
                     cdkDropList
@@ -98,12 +110,14 @@
                     [cdkDropListConnectedTo]="[availableList]"
                     class="device-list"
                     (cdkDropListDropped)="drop($event)">
-                    <app-device [data]="device" *ngFor="let device of selectedDevices" cdkDrag></app-device>
+                    <app-device [data]="device" [clickable]="false"
+                                *ngFor="let device of selectedDevices" cdkDrag></app-device>
                   </div>
                 </div>
               </div>
 
-              <button mat-button color="primary" matTooltip="Assign all listed available devices to session" (click)="assignAll()" [disabled]="!filteredDevices.length">
+              <button mat-button color="primary" matTooltip="Assign all listed available devices to session"
+                      (click)="assignAll()" [disabled]="!filteredDevices.length">
                 Assign All <mat-icon>forward</mat-icon>
               </button>
 
@@ -114,7 +128,9 @@
             </mat-step>
 
             <mat-step label="File Names" [stepControl]="filenameForm">
-              <button class="bulk-assign-button" mat-button color="primary" matTooltip="bulk assign by pasting a list of filenames" (click)="clickBulkFilenameAssignment()">Bulk assign <mat-icon>assignment</mat-icon></button>
+              <button class="bulk-assign-button" mat-button color="primary"
+                      matTooltip="bulk assign by pasting a list of filenames"
+                      (click)="clickBulkFilenameAssignment()">Bulk assign <mat-icon>assignment</mat-icon></button>
               <form [formGroup]="filenameForm">
                 <span *ngFor="let d of selectedDevices">
                   <mat-form-field >

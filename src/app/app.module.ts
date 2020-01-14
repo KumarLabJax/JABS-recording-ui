@@ -13,7 +13,9 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatProgressSpinnerModule,
   MatSliderModule,
+  MatSlideToggleModule,
   MatSnackBarModule,
   MatStepperModule,
   MatTableModule,
@@ -34,6 +36,9 @@ import { DurationPipe, SessionTableComponent } from './session-table/session-tab
 import { CancelConfirmationDialogComponent } from './session-table/cancel-confirmation-dialog/cancel-confirmation-dialog.component';
 import { FileprefixGroupSetDialogComponent } from './new-recording-session/fileprefix-group-set-dialog/fileprefix-group-set-dialog.component';
 import { TabsComponent } from './tabs/tabs.component';
+import { LiveStreamDialogComponent } from './live-stream-dialog/live-stream-dialog.component';
+import { LiveStreamButtonComponent } from './live-stream-button/live-stream-button.component';
+import { PlyrModule } from 'ngx-plyr';
 import { RemoveConfirmationDialogComponent } from './session-table/remove-confirmation-dialog/remove-confirmation-dialog.component';
 
 @NgModule({
@@ -51,6 +56,8 @@ import { RemoveConfirmationDialogComponent } from './session-table/remove-confir
     CancelConfirmationDialogComponent,
     FileprefixGroupSetDialogComponent,
     TabsComponent,
+    LiveStreamDialogComponent,
+    LiveStreamButtonComponent,
     RemoveConfirmationDialogComponent
   ],
   imports: [
@@ -73,9 +80,12 @@ import { RemoveConfirmationDialogComponent } from './session-table/remove-confir
     ReactiveFormsModule,
     DragDropModule,
     MatSliderModule,
+    MatSlideToggleModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    PlyrModule
   ],
   providers: [],
   bootstrap: [AppComponent],
@@ -83,6 +93,7 @@ import { RemoveConfirmationDialogComponent } from './session-table/remove-confir
     DeviceInfoDialogComponent,
     CancelConfirmationDialogComponent,
     FileprefixGroupSetDialogComponent,
+    LiveStreamDialogComponent,
     RemoveConfirmationDialogComponent
   ]
 })

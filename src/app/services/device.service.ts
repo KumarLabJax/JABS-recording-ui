@@ -18,8 +18,13 @@ export class DeviceService {
     return this.http.get<Device[]>(this.baseURL).pipe(retry(3));
   }
 
-  public getIdleDevices(): Observable<Device[]> {
-    const parameters = new HttpParams().set('state', 'IDLE');
-    return this.http.get<Device[]>(this.baseURL, {params: parameters}).pipe(retry(3));
+  /**
+   * this sends a request to the control service requesting that this device begin/continue
+   * to stream live video
+   *
+   * @param device - device that we want to view live stream of
+   */
+  public requestLiveStream(device: Device): Observable<any> {
+    return this.http.get<any>(this.baseURL + `/stream/${device.id}`);
   }
 }

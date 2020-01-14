@@ -1,0 +1,13 @@
+.live-stream-loader ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: darkgray;
+}
+
+/* need to set a height on the div containing the spinner, otherwise we get a weird
+ behavior -- the spinner appears to be a square image that is rotated, meaning its diagonal
+ dimensions are larger and when the corners than its width and height and the corners of
+ the square image bump up against the elements above and below the spinner causing our dialog
+ to keep adding/removing a scroll bar to accommodate
+ */
+.spinner-container {
+  height: 200px;
+}

@@ -58,13 +58,10 @@
                 <div fxFlex></div>
               </div>
               <div *ngFor="let ds of session.device_statuses" fxLayout="row" fxLayoutAlign="space-between center">
-                <div fxFlex="20">{{ds.device_name}}</div>
+                <div fxFlex="20">{{ds.device.name}}</div>
                 <div fxFlex="20">{{ds.status}}</div>
                 <div fxFlex="20">{{ds.recording_time | duration}}</div>
-                <button mat-icon-button *ngIf="ds.status === 'RECORDING'"
-                        (click)="onClickOpenStream(ds.device_id)">
-                  <mat-icon color="primary" matTooltip="open live stream">ondemand_video</mat-icon>
-                </button>
+                <app-live-stream-button [device]="ds.device"></app-live-stream-button>
                 <button mat-icon-button *ngIf="ds.status === 'RECORDING' || ds.status === 'PENDING'"
                         (click)="onClickStopDevice(session.id, ds)">
                   <mat-icon color="primary" matTooltip="stop recording session on this device">cancel</mat-icon>

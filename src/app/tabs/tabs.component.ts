@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   trigger,
   style,
   animate,
   transition
 } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tabs',
@@ -28,10 +29,11 @@ import {
 })
 export class TabsComponent {
 
+  @Input() showTabs = true;
+
   navLinks = [
     {name: 'DASHBOARD', url: 'dashboard'},
     {name: 'NEW RECORDING SESSION', url: 'new-session'},
   ];
 
-  constructor() {}
 }

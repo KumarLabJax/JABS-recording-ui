@@ -97,7 +97,7 @@ export class NewRecordingSessionComponent implements OnInit {
         // setup filtered list
         this.filteredDevices = this.allDevices.filter(this.filterCallback, this);
       }, err => {
-        console.error('error getting idle devices: ', err);
+        console.error('error getting devices');
       }
     );
   }
@@ -109,7 +109,7 @@ export class NewRecordingSessionComponent implements OnInit {
    */
   submit() {
 
-    this.recordingSessionService.createNewSession(this.session()).subscribe(result => {
+    this.recordingSessionService.createNewSession(this.session()).subscribe(() => {
       this.openSnackbar('Recording Session Created');
       this.router.navigateByUrl('/dashboard');
     }, err => {

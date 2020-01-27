@@ -1,4 +1,4 @@
-<nav mat-tab-nav-bar>
+<nav *ngIf="showTabs" mat-tab-nav-bar>
   <div *ngFor="let link of navLinks">
     <a mat-tab-link
        [routerLink]="link.url"

@@ -24,7 +24,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
   isRefreshingToken = false;
   tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  authUrls: string[] = ['auth/login', 'auth/refresh'].map(s => environment.api + s);
+  authUrls: string[] = ['auth/login', 'auth/refresh', 'user/send_pw_reset'].map(s => environment.api + s);
   homeUrls: string[] = ['/', '/login', '/dashboard'];
 
   constructor(public tokenService: TokenService,
@@ -51,8 +51,7 @@ export class JwtInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>>  {
 
-    if (request.url.includes('/reset_password/')) {
-      console.log('don\'t add token to reset_password url');
+    if (!request.url.startsWith(environment.api) || request.url.includes('/reset_password/')) {
       return next.handle(request);
     }
 

@@ -11,8 +11,11 @@ import { LoginService } from '../services/login.service';
 })
 export class LoginComponent implements OnInit {
 
+  // we might have a url to redirect to after a successful login
   nextUrl: string;
-  loginError = false;
+
+  // if there is an error logging in we can set this to an error message to display in the login component
+  loginError;
 
   loginForm = new FormGroup({
     email_address: new FormControl(),
@@ -27,7 +30,10 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // grab "next" query parameter if present, otherwise we'll redirect to the app root after logging in
     this.nextUrl = this.route.snapshot.queryParams.next || '/';
+
+    // check to see if we already have valid tokens, if so we can redirect to nextUrl
     if (this.loginService.checkToken()) {
       this.router.navigateByUrl(this.nextUrl);
     } else {
@@ -35,7 +41,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  /**
+   * form submit action -- attempt to log in
+   */
   submit(): void {
+    // call the loginService.login method. this will get JWT tokens if successful
     this.loginService.login(JSON.stringify(this.loginForm.value)).subscribe(resp => {
       this.loginError = null;
       this.loginService.setLoginValues(resp.access, resp.refresh);
@@ -48,6 +58,7 @@ export class LoginComponent implements OnInit {
         this.loginError = err.error.message;
       } else {
         console.error(err);
+        this.loginError = 'server error';
       }
     });
   }

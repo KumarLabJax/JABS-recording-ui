@@ -48,6 +48,7 @@ import { ChangePasswordDialogComponent } from './toolbar/user-menu/change-passwo
 import { AdminMenuComponent } from './toolbar/admin-menu/admin-menu.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { InviteUserDialogComponent } from './toolbar/admin-menu/invite-user-dialog/invite-user-dialog.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { InviteUserDialogComponent } from './toolbar/admin-menu/invite-user-dial
     ChangePasswordDialogComponent,
     AdminMenuComponent,
     PasswordResetComponent,
-    InviteUserDialogComponent
+    InviteUserDialogComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

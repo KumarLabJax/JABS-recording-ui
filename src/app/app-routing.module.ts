@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { LoginService } from './services/login.service';
 import { TokenService } from './services/token.service';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'new-session', canActivate: [AuthGuard], component: NewRecordingSessionComponent},
   {path: 'login', component: LoginComponent, data: {showTabs: false}},
   {path: 'password-reset/:uid/:token', component: PasswordResetComponent, data: {showTabs: false}},
+  {path: 'forgot-password', component: ForgotPasswordComponent, data: {showTabs: false}},
   // for now redirect the root page to the dashboard component
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
 ];

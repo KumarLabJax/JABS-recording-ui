@@ -60,6 +60,15 @@ export class LoginService {
     return this.http.post(`${environment.api}user/${uid}/reset_password/${token}`, {password: newPassword});
   }
 
+  forgotPassword(emailAddress: string) {
+    const url = window.location.origin + this.router.createUrlTree(['/password-reset']);
+    return this.http.post(
+      `${environment.api}user/send_pw_reset`,
+      {email: emailAddress, url},
+      {headers: new HttpHeaders().set('Content-Type', 'application/json')}
+    );
+  }
+
   inviteUser(emailAddress: string, isAdmin: boolean): Observable<any> {
     const url = window.location.origin + this.router.createUrlTree(['/password-reset']);
     return this.http.post(

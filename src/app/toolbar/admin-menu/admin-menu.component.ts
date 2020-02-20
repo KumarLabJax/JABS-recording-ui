@@ -16,8 +16,10 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
   private authSub: Subscription;
   private adminSub: Subscription;
 
-  constructor(private loginService: LoginService,
-              private matDialog: MatDialog) { }
+  constructor(
+    private loginService: LoginService,
+    private matDialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.authSub = this.loginService.isAuthenticated.subscribe(value => {
@@ -33,6 +35,9 @@ export class AdminMenuComponent implements OnInit, OnDestroy {
     this.adminSub.unsubscribe();
   }
 
+  /**
+   * handle click on "Invite User" menu item
+   */
   inviteUser() {
     this.matDialog.open(InviteUserDialogComponent);
   }

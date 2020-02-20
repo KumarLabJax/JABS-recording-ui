@@ -10,6 +10,8 @@ import { LoginService } from '../services/login.service';
 })
 export class ForgotPasswordComponent {
 
+  submitted = false;
+
   form = new FormGroup({
     email_address: new FormControl('', Validators.required)
   });
@@ -18,8 +20,6 @@ export class ForgotPasswordComponent {
     private loginService: LoginService,
     public location: Location
   ) { }
-
-  submitted = false;
 
   submit() {
     this.loginService.forgotPassword(this.form.value.email_address).subscribe(() => {

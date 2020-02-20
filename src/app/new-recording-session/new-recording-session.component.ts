@@ -108,7 +108,6 @@ export class NewRecordingSessionComponent implements OnInit {
    * dashboard if submission was successful.
    */
   submit() {
-
     this.recordingSessionService.createNewSession(this.session()).subscribe(() => {
       this.openSnackbar('Recording Session Created');
       this.router.navigateByUrl('/dashboard');

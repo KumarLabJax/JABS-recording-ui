@@ -18,10 +18,14 @@ const passwordErrorValidator: ValidatorFn = (control: FormGroup): ValidationErro
   styleUrls: ['./password-reset.component.css']
 })
 export class PasswordResetComponent implements OnInit {
+  // the following two parameters are obtained from URL followed from password reset email
+  uid: number;  // id of user attempting to reset password
+  token: string; // password reset token
 
-  uid: number;
-  token: string;
+  // this will be added as a form validator to make sure the user enters the same password twice
   passwordMatchErrorMatcher = new PasswordsMatchErrorMatcher();
+
+  // any error message recieved from server after attempting to reset password
   resetError: string;
 
   passwordForm = new FormGroup({
@@ -35,6 +39,7 @@ export class PasswordResetComponent implements OnInit {
               private router: Router,
               private tokenService: TokenService) {
 
+    // get the uid and token from the URL
     this.uid = +this.route.snapshot.paramMap.get('uid');
     this.token = this.route.snapshot.paramMap.get('token');
   }
@@ -45,20 +50,29 @@ export class PasswordResetComponent implements OnInit {
   }
 
   cancel() {
+    // if they don't want to reset, redirect them to the login page
     this.router.navigate(['/login']);
   }
 
+  /**
+   * attempt to save their new password
+   */
   savePassword() {
     this.loginService.resetPassword(this.uid, this.token, this.passwordForm.value.newPassword).subscribe(() => {
+      // success -- open a snackbar message and redirect them to the login page
       this.snackbar.open('Password Changed', 'CLOSE', {duration: 6000});
       this.router.navigate(['/login']);
     }, err => {
+      // if there was an error display any message it may contain and log the error to the console.
       const message = ('message' in err.error) ? ': ' + err.error.message : '';
       this.resetError = message;
       console.error(err);
     });
   }
 
+  /**
+   * returns true if the form should display the "passwords don't match" error message
+   */
   showMatchError() {
     return this.passwordForm.errors !== null && 'passwordError' in this.passwordForm.errors;
   }

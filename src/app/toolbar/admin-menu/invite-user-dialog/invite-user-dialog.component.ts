@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { LoginService } from '../../../services/login.service';
@@ -8,7 +8,7 @@ import { LoginService } from '../../../services/login.service';
   templateUrl: './invite-user-dialog.component.html',
   styleUrls: ['./invite-user-dialog.component.css']
 })
-export class InviteUserDialogComponent implements OnInit {
+export class InviteUserDialogComponent {
 
   submitting = false;
 
@@ -18,17 +18,16 @@ export class InviteUserDialogComponent implements OnInit {
   });
 
   constructor(
-    public dialogRef: MatDialogRef<InviteUserDialogComponent>,
+    private dialogRef: MatDialogRef<InviteUserDialogComponent>,
     private snackbar: MatSnackBar,
     private loginService: LoginService
   ) { }
 
-  ngOnInit() {
-  }
-
+  /**
+   * handle submit button click
+   */
   submit() {
     this.submitting = true;
-    //this.snackbar.open('Sending Invitation', 'CLOSE', {duration: 6000});
     this.loginService.inviteUser(this.inviteForm.value.emailAddress, this.inviteForm.value.admin).subscribe(() => {
       this.snackbar.open('Invitation Sent', 'CLOSE', {duration: 6000});
       this.dialogRef.close();

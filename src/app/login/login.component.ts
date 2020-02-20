@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
 import { LoginService } from '../services/login.service';
 
 @Component({
@@ -23,7 +22,6 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(
-    private snackbar: MatSnackBar,
     private route: ActivatedRoute,
     private loginService: LoginService,
     private router: Router
@@ -47,16 +45,18 @@ export class LoginComponent implements OnInit {
   submit(): void {
     // call the loginService.login method. this will get JWT tokens if successful
     this.loginService.login(JSON.stringify(this.loginForm.value)).subscribe(resp => {
+      // clear any error message
       this.loginError = null;
+      // success, save the tokens contained in the response
       this.loginService.setLoginValues(resp.access, resp.refresh);
-      this.snackbar.open('You\'ve successfully logged in!', 'DONE', {
-        duration: 3000
-      });
+      // and navigate away from the login page
       this.router.navigateByUrl(this.nextUrl);
     }, err => {
       if (err.status === 401) {
+        // save the error message for a 401 "not authorized" error
         this.loginError = err.error.message;
       } else {
+        // some other expected error. log it to the console and set a generic "server error" message
         console.error(err);
         this.loginError = 'server error';
       }

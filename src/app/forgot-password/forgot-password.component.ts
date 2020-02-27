@@ -13,7 +13,7 @@ export class ForgotPasswordComponent {
   submitted = false;
 
   form = new FormGroup({
-    email_address: new FormControl('', Validators.required)
+    email_address: new FormControl('', [Validators.required, Validators.email])
   });
 
   constructor(

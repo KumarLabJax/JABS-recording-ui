@@ -12,10 +12,11 @@
       <mat-card-content>
         <form class="login-form" (ngSubmit)="submit()" [formGroup]="loginForm">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Email" formControlName="email_address" required>
+            <input matInput placeholder="Email" formControlName="email_address">
+            <mat-error>Enter a valid email address</mat-error>
           </mat-form-field>
           <mat-form-field class="full-width">
-            <input matInput placeholder="Password" type="password" formControlName="password" autocomplete="on" required>
+            <input matInput placeholder="Password" type="password" formControlName="password">
           </mat-form-field>
           <div class="login-error" *ngIf="loginError">
             <p><b>Error: {{loginError}}.</b></p>

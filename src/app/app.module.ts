@@ -45,7 +45,6 @@ import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserMenuComponent } from './toolbar/user-menu/user-menu.component';
 import { JwtInterceptor } from './services/jwt.interceptor';
-import { UserManagementComponent } from './user-management/user-management.component';
 import { ChangePasswordDialogComponent } from './toolbar/user-menu/change-password-dialog/change-password-dialog.component';
 import { AdminMenuComponent } from './toolbar/admin-menu/admin-menu.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
@@ -72,7 +71,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     RemoveConfirmationDialogComponent,
     LoginComponent,
     UserMenuComponent,
-    UserManagementComponent,
     ChangePasswordDialogComponent,
     AdminMenuComponent,
     PasswordResetComponent,

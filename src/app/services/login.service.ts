@@ -79,7 +79,7 @@ export class LoginService {
    * @param oldPassword user's old password
    * @param newPassword user's new password
    */
-  changePassword(oldPassword: string, newPassword: string) {
+  changePassword(oldPassword: string, newPassword: string): Observable<any> {
     return this.http.put(
       `${environment.api}user/${this.identity.uid}/change_password`,
       {old_password: oldPassword, new_password: newPassword}
@@ -92,7 +92,7 @@ export class LoginService {
    * @param token password reset token
    * @param newPassword
    */
-  resetPassword(uid: number, token: string, newPassword: string) {
+  resetPassword(uid: number, token: string, newPassword: string): Observable<any> {
     return this.http.post(`${environment.api}user/${uid}/reset_password/${token}`, {password: newPassword});
   }
 
@@ -100,7 +100,7 @@ export class LoginService {
    * request a password reset email
    * @param emailAddress email address identifying user requesting a password reset email
    */
-  forgotPassword(emailAddress: string) {
+  forgotPassword(emailAddress: string): Observable<any> {
     // need to send a 'callback' URL to the server so it knows where to send the user to reset the password
     const url = window.location.origin + this.router.createUrlTree(['/password-reset']);
     return this.http.post(

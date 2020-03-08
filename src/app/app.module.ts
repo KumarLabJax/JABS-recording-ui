@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule, AuthGuard } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DeviceComponent } from './device/device.component';
 import { DeviceListComponent } from './device-list/device-list.component';
@@ -13,6 +13,8 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatMenuModule,
+  MatProgressBarModule,
   MatProgressSpinnerModule,
   MatSliderModule,
   MatSlideToggleModule,
@@ -23,8 +25,7 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DeviceInfoDialogComponent, FormatSecondsPipe } from './device/device-info-dialog/device-info-dialog.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -40,6 +41,15 @@ import { LiveStreamDialogComponent } from './live-stream-dialog/live-stream-dial
 import { LiveStreamButtonComponent } from './live-stream-button/live-stream-button.component';
 import { PlyrModule } from 'ngx-plyr';
 import { RemoveConfirmationDialogComponent } from './session-table/remove-confirmation-dialog/remove-confirmation-dialog.component';
+import { LoginComponent } from './login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserMenuComponent } from './toolbar/user-menu/user-menu.component';
+import { JwtInterceptor } from './services/jwt.interceptor';
+import { ChangePasswordDialogComponent } from './toolbar/user-menu/change-password-dialog/change-password-dialog.component';
+import { AdminMenuComponent } from './toolbar/admin-menu/admin-menu.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { InviteUserDialogComponent } from './toolbar/admin-menu/invite-user-dialog/invite-user-dialog.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +68,14 @@ import { RemoveConfirmationDialogComponent } from './session-table/remove-confir
     TabsComponent,
     LiveStreamDialogComponent,
     LiveStreamButtonComponent,
-    RemoveConfirmationDialogComponent
+    RemoveConfirmationDialogComponent,
+    LoginComponent,
+    UserMenuComponent,
+    ChangePasswordDialogComponent,
+    AdminMenuComponent,
+    PasswordResetComponent,
+    InviteUserDialogComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -83,18 +100,29 @@ import { RemoveConfirmationDialogComponent } from './session-table/remove-confir
     MatSlideToggleModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatTableModule,
     MatTabsModule,
+    MatMenuModule,
     PlyrModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+    AuthGuard
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     DeviceInfoDialogComponent,
     CancelConfirmationDialogComponent,
     FileprefixGroupSetDialogComponent,
     LiveStreamDialogComponent,
-    RemoveConfirmationDialogComponent
+    RemoveConfirmationDialogComponent,
+    ChangePasswordDialogComponent,
+    InviteUserDialogComponent
   ]
 })
 export class AppModule { }

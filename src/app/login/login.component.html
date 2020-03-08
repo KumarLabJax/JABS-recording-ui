@@ -1,0 +1,37 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="60" fxFlex.lt-sm="100" fxFlex.gt-lg="25" class="login-card-container">
+    <mat-card class="login-card mat-elevation-z4">
+      <mat-card-title-group>
+        <mat-card-title id="title">
+          Login Required
+        </mat-card-title>
+        <mat-card-subtitle fxLayoutAlign="space-between end">
+          <span>Enter your email address and password to continue.</span>
+        </mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-card-content>
+        <form class="login-form" (ngSubmit)="submit()" [formGroup]="loginForm">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Email" formControlName="email_address">
+            <mat-error>Enter a valid email address</mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Password" type="password" formControlName="password">
+          </mat-form-field>
+          <div class="login-error" *ngIf="loginError">
+            <p><b>Error: {{loginError}}.</b></p>
+            <p>Please check that your email address and password are entered correctly.</p>
+          </div>
+          <div>
+            <span fxFlex></span><p style="font-size: smaller"><a [routerLink]="['/forgot-password']">I forgot my password</a></p>
+          </div>
+          <button type="submit" hidden [disabled]="!loginForm.valid"></button>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <span fxFlex></span>
+        <button mat-button color="primary" [disabled]="!loginForm.valid" (click)="submit()">LOGIN</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

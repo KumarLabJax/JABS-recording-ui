@@ -1,0 +1,11 @@
+<div *ngIf="isAdmin">
+  <button mat-icon-button [matMenuTriggerFor]="admin_menu">
+    <mat-icon>settings_application</mat-icon>
+  </button>
+  <mat-menu #admin_menu="matMenu">
+    <button mat-menu-item (click)="inviteUser()">
+      <mat-icon>person_add</mat-icon>
+      Invite User
+    </button>
+  </mat-menu>
+</div>

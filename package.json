@@ -30,7 +30,8 @@
     "plyr": "^3.5.6",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "jwt-decode": "latest"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.21",
@@ -41,6 +42,7 @@
     "@types/hls.js": "^0.12.5",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/jwt-decode": "^2.2.1",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",

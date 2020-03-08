@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Device } from '../shared/device';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { retry } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 

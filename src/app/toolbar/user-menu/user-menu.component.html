@@ -1,0 +1,18 @@
+<div *ngIf="isAuthenticated">
+  <button mat-icon-button [matMenuTriggerFor]="user_menu">
+    <mat-icon>person</mat-icon>
+  </button>
+  <mat-menu  #user_menu="matMenu">
+    <button disabled mat-menu-item>
+      {{emailAddress}}
+    </button>
+    <button mat-menu-item (click)="changePassword()">
+      <mat-icon>person</mat-icon>
+      Change Password
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      Logout
+    </button>
+  </mat-menu>
+</div>

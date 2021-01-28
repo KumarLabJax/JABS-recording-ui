@@ -62,7 +62,8 @@ export class SessionTableComponent implements OnInit, OnDestroy {
    * @param session - session to cancel
    */
   onClickCancel(session) {
-    const dialogRef = this.dialog.open(CancelConfirmationDialogComponent);
+    const dialogRef = this.dialog.open(CancelConfirmationDialogComponent,
+      {data: {sessionName: session.name}});
 
     dialogRef.afterClosed().subscribe(response => {
       if (response) {

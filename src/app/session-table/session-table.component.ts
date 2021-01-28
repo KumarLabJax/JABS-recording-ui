@@ -84,7 +84,7 @@ export class SessionTableComponent implements OnInit, OnDestroy {
    */
   onClickStopDevice(sessionID: number, deviceStatus: any) {
     const dialogRef = this.dialog.open(CancelConfirmationDialogComponent,
-      {data: {stop_device: true, device_name: deviceStatus.device_name}});
+      {data: {stop_device: true, device_name: deviceStatus.device.name}});
 
     dialogRef.afterClosed().subscribe(response => {
       if (response) {

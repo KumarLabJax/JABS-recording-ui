@@ -57,7 +57,7 @@
                 <div class="device-column-header" fxFlex="20">Elapsed time</div>
                 <div fxFlex></div>
               </div>
-              <div *ngFor="let ds of session.device_statuses" fxLayout="row" fxLayoutAlign="space-between center">
+              <div *ngFor="let ds of session.device_statuses | orderBy: 'device.name'" fxLayout="row" fxLayoutAlign="space-between center">
                 <div fxFlex="20">{{ds.device.name}}</div>
                 <div fxFlex="20">{{ds.status}}</div>
                 <div fxFlex="20">{{ds.recording_time | duration}}</div>

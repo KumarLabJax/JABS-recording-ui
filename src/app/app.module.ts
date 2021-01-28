@@ -50,6 +50,7 @@ import { AdminMenuComponent } from './toolbar/admin-menu/admin-menu.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { InviteUserDialogComponent } from './toolbar/admin-menu/invite-user-dialog/invite-user-dialog.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { OrderModule } from "ngx-order-pipe";
 
 @NgModule({
   declarations: [
@@ -104,7 +105,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     MatTableModule,
     MatTabsModule,
     MatMenuModule,
-    PlyrModule
+    PlyrModule,
+    OrderModule
   ],
   providers: [
     {

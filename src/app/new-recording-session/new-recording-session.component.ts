@@ -37,7 +37,7 @@ export class NewRecordingSessionComponent implements OnInit {
 
   // form group for collecing basic information about the recording session
   newSessionForm = new FormGroup({
-    days: new FormControl(0, [Validators.min(0), Validators.max(14)]),
+    days: new FormControl(0, [Validators.min(0), Validators.max(16)]),
     hours: new FormControl(0, [Validators.min(0), Validators.max(23)]),
     minutes: new FormControl(0, [Validators.min(0), Validators.max(59)]),
     seconds: new FormControl(0, [Validators.min(0), Validators.max(59)]),

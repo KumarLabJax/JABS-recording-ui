@@ -62,7 +62,8 @@ export class SessionTableComponent implements OnInit, OnDestroy {
    * @param session - session to cancel
    */
   onClickCancel(session) {
-    const dialogRef = this.dialog.open(CancelConfirmationDialogComponent);
+    const dialogRef = this.dialog.open(CancelConfirmationDialogComponent,
+      {data: {sessionName: session.name}});
 
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
@@ -84,7 +85,7 @@ export class SessionTableComponent implements OnInit, OnDestroy {
    */
   onClickStopDevice(sessionID: number, deviceStatus: any) {
     const dialogRef = this.dialog.open(CancelConfirmationDialogComponent,
-      {data: {stop_device: true, device_name: deviceStatus.device_name}});
+      {data: {stop_device: true, device_name: deviceStatus.device.name}});
 
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
